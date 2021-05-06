@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".NewEventActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/newEvent_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:title="@string/title_newEvent"
+        app:titleTextAppearance="@style/toolbar_text" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:orientation="vertical">
+
+            <!-- Event Title -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/newEvent_name"
+                android:textAppearance="@style/bold_text" />
+
+            <EditText
+                android:id="@+id/newEvent_name"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_edit_text"
+                android:hint="@string/newEvent_name_hint"
+                android:inputType="text"
+                android:maxLength="30"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:textSize="16sp" />
+
+            <!-- Event Image -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/newEvent_image"
+                android:textAppearance="@style/bold_text" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/newEvent_image"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:background="@color/gray_300"
+                android:onClick="onCLickAddPhoto"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_global_add_photo"
+                app:shapeAppearanceOverlay="@style/newEvent_image_corner" />
+
+            <!-- Event Location -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/newEvent_location"
+                android:textAppearance="@style/bold_text" />
+
+            <EditText
+                android:id="@+id/newEvent_location"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_edit_text"
+                android:drawableStart="@drawable/ic_global_location"
+                android:drawablePadding="12dp"
+                android:hint="@string/newEvent_location_hint"
+                android:inputType="text"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:textSize="16sp" />
+
+            <!-- Event Description -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/newEvent_description"
+                android:textAppearance="@style/bold_text" />
+
+            <EditText
+                android:id="@+id/newEvent_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:maxLines="10"
+                android:background="@drawable/bg_edit_text"
+                android:hint="@string/newEvent_description_hint"
+                android:inputType="text|textMultiLine"
+                android:maxLength="200"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:textSize="16sp" />
+
+            <!-- Event Time -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/newEvent_time"
+                android:textAppearance="@style/bold_text" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/newEvent_startDay"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_weight="2"
+                    android:background="@drawable/bg_edit_text"
+                    android:gravity="start|center"
+                    android:hint="@string/newEvent_starts_hint"
+                    android:onClick="onClickAddDate"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="8dp"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/newEvent_startTime"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_edit_text"
+                    android:gravity="start|center"
+                    android:hint="@string/newEvent_time_hint"
+                    android:onClick="onClickAddTime"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="8dp"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/newEvent_endDay"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_weight="2"
+                    android:background="@drawable/bg_edit_text"
+                    android:gravity="start|center"
+                    android:hint="@string/newEvent_ends_hint"
+                    android:onClick="onClickAddDate"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="8dp"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/newEvent_endTime"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_edit_text"
+                    android:gravity="start|center"
+                    android:hint="@string/newEvent_time_hint"
+                    android:onClick="onClickAddTime"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="8dp"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <!-- Event Participants -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/newEvent_participants"
+                android:textAppearance="@style/bold_text" />
+
+            <EditText
+                android:id="@+id/newEvent_participants"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_edit_text"
+                android:hint="@string/newEvent_participants_hint"
+                android:inputType="numberDecimal"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:textSize="16sp" />
+
+            <!-- Event Type -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/newEvent_type"
+                android:textAppearance="@style/bold_text" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <!-- Music -->
+                    <Button
+                        android:id="@+id/chip_music"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/bg_chip"
+                        android:drawableTop="@drawable/ic_chip_music"
+                        android:onClick="onCLickSelectEventType"
+                        android:padding="12dp"
+                        android:text="@string/chip_music"
+                        android:textAllCaps="false"
+                        android:textColor="@color/color_chip_text"
+                        android:textSize="12sp" />
+                    <!-- Education -->
+                    <Button
+                        android:id="@+id/chip_education"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/bg_chip"
+                        android:drawableTop="@drawable/ic_chip_education"
+                        android:onClick="onCLickSelectEventType"
+                        android:padding="12dp"
+                        android:text="@string/chip_education"
+                        android:textAllCaps="false"
+                        android:textColor="@color/color_chip_text"
+                        android:textSize="12sp" />
+                    <!-- Sport -->
+                    <Button
+                        android:id="@+id/chip_sport"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/bg_chip"
+                        android:drawableTop="@drawable/ic_chip_sport"
+                        android:onClick="onCLickSelectEventType"
+                        android:padding="12dp"
+                        android:text="@string/chip_sport"
+                        android:textAllCaps="false"
+                        android:textColor="@color/color_chip_text"
+                        android:textSize="12sp" />
+                    <!-- Game -->
+                    <Button
+                        android:id="@+id/chip_game"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/bg_chip"
+                        android:drawableTop="@drawable/ic_chip_game"
+                        android:onClick="onCLickSelectEventType"
+                        android:padding="12dp"
+                        android:text="@string/chip_game"
+                        android:textAllCaps="false"
+                        android:textColor="@color/color_chip_text"
+                        android:textSize="12sp" />
+                    <!-- Travel -->
+                    <Button
+                        android:id="@+id/chip_travel"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/bg_chip"
+                        android:drawableTop="@drawable/ic_chip_travel"
+                        android:onClick="onCLickSelectEventType"
+                        android:padding="12dp"
+                        android:text="@string/chip_travel"
+                        android:textAllCaps="false"
+                        android:textColor="@color/color_chip_text"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <!-- Create Button -->
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_button"
+                android:onClick="onClickCreateEvent"
+                android:text="@string/newEvent_create"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>
