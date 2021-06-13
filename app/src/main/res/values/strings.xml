@@ -4,6 +4,7 @@
     <!-- App Bar -->
     <string name="title_home">Home</string>
     <string name="title_chat">Chat</string>
+    <string name="title_MyEvents">My Events</string>
     <string name="title_newEvent">New Event</string>
     <string name="title_Events">Events</string>
     <string name="title_profile">Profile</string>

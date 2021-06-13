@@ -3,62 +3,111 @@ package edu.url.salle.eric.eugenio.eventme;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MyEventsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import edu.url.salle.eric.eugenio.eventme.model.Event;
+
 public class MyEventsFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    // Tab
+    private TextView mSelectedTab;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    // Recycler view
+    private RecyclerView mEventRecycler;
+    private EventAdapter mEventAdapter;
 
     public MyEventsFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MyEventsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MyEventsFragment newInstance(String param1, String param2) {
-        MyEventsFragment fragment = new MyEventsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static MyEventsFragment newInstance() {
+        return new MyEventsFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_events, container, false);
+        View view = inflater.inflate(R.layout.fragment_my_events, container, false);
+
+        configureTab(view);
+        configureRecycleView(view);
+
+        return view;
+    }
+
+    // ----------------------------------------------
+    // TAB
+    // ----------------------------------------------
+
+    private void configureTab(View view) {
+        TextView upcomingEvents = view.findViewById(R.id.myEvents_upcomingEvents);
+        upcomingEvents.setOnClickListener(this::onClickChangeTab);
+
+        TextView pastEvents = view.findViewById(R.id.myEvents_pastEvents);
+        pastEvents.setOnClickListener(this::onClickChangeTab);
+
+        // Set initial tab
+        mSelectedTab = upcomingEvents;
+        mSelectedTab.setSelected(true);
+    }
+
+    public void onClickChangeTab(View view) {
+        // Update tab only if tab selected is different than the current
+        if (view.getId() != mSelectedTab.getId()) {
+            // Restore previous tab
+            mSelectedTab.setSelected(false);
+
+            // Update current tab
+            mSelectedTab = view.findViewById(view.getId());
+            mSelectedTab.setSelected(true);
+
+            // TODO: filter recycler view according selected tab
+        }
+    }
+
+
+    // ----------------------------------------------
+    // RECYCLER VIEW
+    // ----------------------------------------------
+
+    private void configureRecycleView(View view) {
+        mEventRecycler = view.findViewById(R.id.myEvents_recyclerview);
+
+        // ---Provisional--------------------------------------------------------------------
+
+        List<Event> events = new ArrayList<>();
+        for (int i = 1; i <= 10; i++) {
+            events.add(new Event("Event " + i, "Type", "Description",
+                    100, "Location", new Date(), new Date()));
+        }
+        // ----------------------------------------------------------------------------------
+
+        mEventAdapter = new EventAdapter(events);
+        mEventRecycler.setAdapter(mEventAdapter);
+        mEventRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        mEventAdapter.setListener(this::onCLickStartEventActivity);
+    }
+
+    private void onCLickStartEventActivity(int position) {
+        // TODO: start Event activity
+        // Intent intent = new Intent(getActivity(), EventActivity.class);
+        // intent.putExtra(EventActivity.EVENT_ID, position);
+        // getActivity().startActivity(intent);
     }
 }
