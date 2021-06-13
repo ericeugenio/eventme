@@ -15,18 +15,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import edu.url.salle.eric.eugenio.eventme.io.ApiAdapter;
 import edu.url.salle.eric.eugenio.eventme.model.Event;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private static HomeFragment mHomeFragment;
 
     // Recycler view
     private RecyclerView mEventRecycler;
@@ -35,27 +32,16 @@ public class HomeFragment extends Fragment {
     // Filter chips
     private Button mSelectedChip;
 
-    public HomeFragment() {
-        // Required empty public constructor
+    private HomeFragment() {
+        // Required empty private constructor
     }
 
-    // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public static HomeFragment getInstance() {
+        if (mHomeFragment == null) {
+            mHomeFragment = new HomeFragment();
         }
+
+        return mHomeFragment;
     }
 
     @Override
@@ -118,7 +104,20 @@ public class HomeFragment extends Fragment {
 
     private void configureRecycleView(View view) {
         mEventRecycler = view.findViewById(R.id.home_recyclerview_event);
+/*
+        ApiAdapter.getInstance().getAllEvents().enqueue(new Callback<List<Event>>() {
+            @Override
+            public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+                mEventAdapter = new EventAdapter(response.body());
+                mEventRecycler.setAdapter(mEventAdapter);
+                mEventRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+            }
 
+            @Override
+            public void onFailure(Call<List<Event>> call, Throwable t) {
+            }
+        });
+*/
         // ---Provisional--------------------------------------------------------------------
 
         List<Event> events = new ArrayList<>();
@@ -126,13 +125,15 @@ public class HomeFragment extends Fragment {
             events.add(new Event("Event " + i, "Type", "Description",
                     100, "Location", new Date(), new Date()));
         }
+
         // ----------------------------------------------------------------------------------
 
         mEventAdapter = new EventAdapter(events);
+        mEventAdapter.setListener(this::onCLickStartEventActivity);
+
         mEventRecycler.setAdapter(mEventAdapter);
         mEventRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        mEventAdapter.setListener(this::onCLickStartEventActivity);
     }
 
     private void onCLickStartEventActivity(int position) {

@@ -1,5 +1,8 @@
 package edu.url.salle.eric.eugenio.eventme.io;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -9,7 +12,7 @@ public class ApiAdapter {
 
     private static ApiService apiService;
 
-    public static ApiService getInstance () {
+    public static ApiService getInstance() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel( HttpLoggingInterceptor.Level.BODY);
 
@@ -18,10 +21,14 @@ public class ApiAdapter {
 
         String baseUrl = "http://puigmal.salle.url.edu/api/";
 
+        Gson gson = new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .create();
+
         if (apiService == null) {
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
                     .client(httpClient.build())
                     .build();
             apiService = retrofit.create(ApiService.class);

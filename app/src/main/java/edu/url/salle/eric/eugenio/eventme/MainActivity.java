@@ -1,6 +1,9 @@
 package edu.url.salle.eric.eugenio.eventme;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.View;
@@ -11,13 +14,22 @@ public class MainActivity extends AppCompatActivity {
 
     private Button mSelectedView;
 
+    private FragmentManager mFragmentManager;
+    private FragmentTransaction mFragmentTransaction;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mSelectedView = findViewById(R.id.button_nav_profile);
+        mSelectedView = findViewById(R.id.button_nav_home);
         mSelectedView.setSelected(true);
+
+        // Add home fragment by default
+        mFragmentManager = getSupportFragmentManager();
+        mFragmentTransaction = mFragmentManager.beginTransaction();
+        mFragmentTransaction.add(R.id.nav_host_fragment, HomeFragment.getInstance());
+        mFragmentTransaction.commit();
     }
 
     public void onClickChangeView(View view) {
@@ -30,8 +42,29 @@ public class MainActivity extends AppCompatActivity {
             mSelectedView = findViewById(view.getId());
             mSelectedView.setSelected(true);
 
-            // TODO: change fragment
+            replaceFragment(getFragment(view.getId()));
         }
+    }
+
+    private Fragment getFragment(int id) {
+        switch (id) {
+            case R.id.button_nav_home:
+                return HomeFragment.getInstance();
+            case R.id.button_nav_chat:
+                return new ChatFragment();
+            case R.id.button_nav_myEvents:
+                return new MyEventsFragment();
+            case R.id.button_nav_profile:
+                return new ProfileFragment();
+            default:
+                return null;
+        }
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        mFragmentTransaction = mFragmentManager.beginTransaction();
+        mFragmentTransaction.replace(R.id.nav_host_fragment, fragment);
+        mFragmentTransaction.commit();
     }
 
     public void onClickNewEvent(View view) {

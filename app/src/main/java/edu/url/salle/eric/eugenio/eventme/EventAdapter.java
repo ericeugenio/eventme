@@ -62,8 +62,10 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventHolder>
         //imageView.setImageDrawable(drawable);
 
         // Type, date, name, location
+        String date = (event.getStartDate() == null) ? "Not defined" : dateFormat.format(event.getStartDate());
+
         typeTextView.setText(event.getType());
-        dateTextView.setText(dateFormat.format(event.getStartDate()));
+        dateTextView.setText(date);
         nameTextView.setText(event.getName());
         locationTextView.setText(event.getLocation());
 
