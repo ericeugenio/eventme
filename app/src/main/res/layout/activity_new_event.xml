@@ -99,11 +99,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
-                android:maxLines="10"
                 android:background="@drawable/bg_edit_text"
                 android:hint="@string/newEvent_description_hint"
                 android:inputType="text|textMultiLine"
                 android:maxLength="200"
+                android:maxLines="10"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="8dp"
                 android:textSize="16sp" />
@@ -192,26 +192,6 @@
                     android:textSize="16sp" />
 
             </LinearLayout>
-
-            <!-- Event Participants -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/newEvent_participants"
-                android:textAppearance="@style/bold_text" />
-
-            <EditText
-                android:id="@+id/newEvent_participants"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/bg_edit_text"
-                android:hint="@string/newEvent_participants_hint"
-                android:inputType="numberDecimal"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="8dp"
-                android:textSize="16sp" />
 
             <!-- Event Type -->
             <TextView
@@ -311,6 +291,26 @@
                 </LinearLayout>
 
             </HorizontalScrollView>
+
+            <!-- Event Participants -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/newEvent_participants"
+                android:textAppearance="@style/bold_text" />
+
+            <EditText
+                android:id="@+id/newEvent_participants"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_edit_text"
+                android:hint="@string/newEvent_participants_hint"
+                android:inputType="numberDecimal"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:textSize="16sp" />
 
             <!-- Create Button -->
             <Button

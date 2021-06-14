@@ -15,11 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import edu.url.salle.eric.eugenio.eventme.io.ApiAdapter;
 import edu.url.salle.eric.eugenio.eventme.model.Event;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
 

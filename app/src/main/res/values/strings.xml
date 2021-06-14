@@ -12,6 +12,7 @@
 
     <string name="action_editProfile">Edit Profile</string>
     <string name="action_manageAccount">Manage Account</string>
+    <string name="action_cancelNewEvent">Cancel New Event</string>
 
     <!-- Search Bar -->
     <string name="searchBar_hint">Search</string>

@@ -1,4 +1,4 @@
-package edu.url.salle.eric.eugenio.eventme.io;
+package edu.url.salle.eric.eugenio.eventme.api;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

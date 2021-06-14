@@ -1,10 +1,18 @@
 package edu.url.salle.eric.eugenio.eventme;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -19,6 +27,10 @@ import java.util.Locale;
 
 public class NewEventActivity extends AppCompatActivity {
 
+    // Toolbar
+    private Toolbar mToolbar;
+
+    // Widgets
     private EditText mEventName, mEventLocation, mEventDescription, mEventParticipants;
     private TextView mEventStartDay, mEventStartTime, mEventEndDay, mEventEndTime;
 
@@ -36,6 +48,9 @@ public class NewEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_event);
 
+        mToolbar = findViewById(R.id.newEvent_toolbar);
+        setSupportActionBar(mToolbar);
+
         configureWidgets();
     }
 
@@ -52,6 +67,30 @@ public class NewEventActivity extends AppCompatActivity {
 
         mSelectedChip = findViewById(R.id.chip_music);
         mSelectedChip.setSelected(true);
+    }
+
+    public static Intent newIntent(Context packageContext) {
+        return new Intent(packageContext, NewEventActivity.class);
+    }
+
+    // ----------------------------------------------
+    // TOOLBAR
+    // ----------------------------------------------
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_new_event, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_cancelNewEvent) {
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     // ----------------------------------------------
