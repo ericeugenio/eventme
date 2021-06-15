@@ -15,6 +15,9 @@ public class Friend {
     @SerializedName("last_name")
     private String mLastName;
     @Expose
+    @SerializedName("image")
+    private String mImage;
+    @Expose
     @SerializedName("email")
     private String mEmail;
 

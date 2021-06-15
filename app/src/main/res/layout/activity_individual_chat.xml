@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".IndividualChatActivity">
+
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/individual_chat_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:fitsSystemWindows="true"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/individual_chat_image"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@color/gray_100"
+                android:padding="2dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/profile_image_corner" />
+
+            <TextView
+                android:id="@+id/individual_chat_name"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <!-- Divider -->
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_300"
+
+        app:layout_constraintTop_toBottomOf="@+id/individual_chat_toolbar"
+        app:layout_constraintBottom_toTopOf="@+id/individual_chat_recyclerview"/>
+
+    <!-- Message Recycled View -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/individual_chat_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:elevation="0dp"
+        android:overScrollMode="never"
+        android:fadingEdge="none"
+        android:fadingEdgeLength="0dp"
+        android:requiresFadingEdge="none"
+
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintTop_toBottomOf="@+id/view"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout" />
+
+    <!-- Message sender -->
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gray_300"
+        android:orientation="horizontal"
+
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <EditText
+            android:id="@+id/individual_chat_text"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="16dp"
+            android:paddingHorizontal="8dp"
+            android:background="@drawable/bg_chip"
+            android:inputType="text"/>
+
+        <ImageButton
+            android:id="@+id/individual_chat_send"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="8dp"
+            android:background="@drawable/bg_button_rounded"
+            android:onClick="onCLickSendMessage"
+            android:src="@drawable/ic_chat_send" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

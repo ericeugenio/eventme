@@ -1,4 +1,4 @@
-package edu.url.salle.eric.eugenio.eventme;
+package edu.url.salle.eric.eugenio.eventme.adapters;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
+import edu.url.salle.eric.eugenio.eventme.R;
 import edu.url.salle.eric.eugenio.eventme.model.Event;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventHolder> {

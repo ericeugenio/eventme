@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="EventmeTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/blue_200</item>
+        <item name="colorPrimary">@color/blue_300</item>
         <item name="colorPrimaryVariant">@color/blue_700</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->

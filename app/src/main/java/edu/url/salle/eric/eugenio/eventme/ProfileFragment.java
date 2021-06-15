@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import edu.url.salle.eric.eugenio.eventme.adapters.EventAdapter;
 import edu.url.salle.eric.eugenio.eventme.model.Event;
 
 public class ProfileFragment extends Fragment {
@@ -183,10 +184,10 @@ public class ProfileFragment extends Fragment {
         mEventRecycler.setAdapter(mEventAdapter);
         mEventRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        mEventAdapter.setListener(this::onCLickStartEventActivity);
+        mEventAdapter.setListener(this::onCLickStartIndividualChatActivity);
     }
 
-    private void onCLickStartEventActivity(int position) {
+    private void onCLickStartIndividualChatActivity(int position) {
         // TODO: start Event activity
         // Intent intent = new Intent(getActivity(), EventActivity.class);
         // intent.putExtra(EventActivity.EVENT_ID, position);

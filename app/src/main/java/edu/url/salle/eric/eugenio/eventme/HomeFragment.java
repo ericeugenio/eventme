@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import edu.url.salle.eric.eugenio.eventme.adapters.EventAdapter;
 import edu.url.salle.eric.eugenio.eventme.model.Event;
 
 public class HomeFragment extends Fragment {

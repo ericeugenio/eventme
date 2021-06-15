@@ -1,4 +1,4 @@
-package edu.url.salle.eric.eugenio.eventme;
+package edu.url.salle.eric.eugenio.eventme.adapters;
 
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -14,19 +14,24 @@ import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.List;
 
+import edu.url.salle.eric.eugenio.eventme.R;
 import edu.url.salle.eric.eugenio.eventme.model.Friend;
 
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHolder> {
 
-    private List<Friend> mFriends;
-    private EventListener mListener;
+    private static List<Friend> mFriends;
+    private FriendListener mListener;
 
     public FriendAdapter(List<Friend> friends) {
-        this.mFriends = friends;
+        mFriends = friends;
     }
 
-    public void setListener(EventListener eventListener) {
-        this.mListener = eventListener;
+    public static List<Friend> getFriends() {
+        return mFriends;
+    }
+
+    public void setListener(FriendListener friendListener) {
+        this.mListener = friendListener;
     }
 
     @Override
@@ -47,12 +52,13 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHold
         CardView cardView = holder.cardView;
         Friend friend = mFriends.get(position);
 
-        ShapeableImageView profileImageView = cardView.findViewById(R.id.card_chat_image);
-        TextView nameTextView = cardView.findViewById(R.id.card_chat_name);
-        TextView lastMessageTextView = cardView.findViewById(R.id.card_chat_lastMessage);
+        ShapeableImageView profileImageView = cardView.findViewById(R.id.card_friend_image);
+        TextView nameTextView = cardView.findViewById(R.id.card_friend_name);
+        TextView lastMessageTextView = cardView.findViewById(R.id.card_friend_lastMessage);
         View notificationView = cardView.findViewById(R.id.card_chat_notification);
 
         // Image
+        // TODO: place friend image
         // Text
         String username = friend.getName() + friend.getLastName();
         nameTextView.setText(username);
@@ -73,7 +79,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHold
     }
 
     // Interface to decouple the Adapter
-    public interface EventListener {
+    public interface FriendListener {
         void onClick(int position);
     }
 

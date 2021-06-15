@@ -96,16 +96,14 @@
             android:textColor="@color/color_nav_bottom"
             android:textSize="12sp"
             style="?android:attr/borderlessButtonStyle"/>
-
     </LinearLayout>
 
     <!-- Floating Button -->
-    <ImageView
+    <ImageButton
         android:id="@+id/main_floatingButton"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_marginBottom="16dp"
-        android:padding="8dp"
         android:src="@drawable/ic_nav_plus"
         android:background="@drawable/bg_floating_button"
         android:onClick="onClickNewEvent"
