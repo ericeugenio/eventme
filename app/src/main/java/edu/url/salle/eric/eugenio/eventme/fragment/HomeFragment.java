@@ -1,5 +1,6 @@
 package edu.url.salle.eric.eugenio.eventme.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import edu.url.salle.eric.eugenio.eventme.EventActivity;
 import edu.url.salle.eric.eugenio.eventme.R;
 import edu.url.salle.eric.eugenio.eventme.adapter.EventAdapter;
 import edu.url.salle.eric.eugenio.eventme.model.Event;
@@ -136,8 +138,10 @@ public class HomeFragment extends Fragment {
 
     private void onCLickStartEventActivity(int position) {
         // TODO: start Event activity
-        // Intent intent = new Intent(getActivity(), EventActivity.class);
-        // intent.putExtra(EventActivity.EVENT_ID, position);
-        // getActivity().startActivity(intent);
+        if (isAdded()) {
+            Intent intent = EventActivity.newIntent(getActivity());
+//          intent.putExtra(EventActivity.EVENT_ID, position);
+            getActivity().startActivity(intent);
+        }
     }
 }

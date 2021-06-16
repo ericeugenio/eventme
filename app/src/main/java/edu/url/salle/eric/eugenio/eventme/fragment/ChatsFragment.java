@@ -19,24 +19,24 @@ import edu.url.salle.eric.eugenio.eventme.R;
 import edu.url.salle.eric.eugenio.eventme.adapter.FriendAdapter;
 import edu.url.salle.eric.eugenio.eventme.model.Friend;
 
-public class ChatsListFragment extends Fragment {
+public class ChatsFragment extends Fragment {
 
     // Recycler view
     private RecyclerView mFriendRecycler;
     private FriendAdapter mFriendAdapter;
 
-    public ChatsListFragment() {
+    public ChatsFragment() {
         // Required empty public constructor
     }
 
-    public static ChatsListFragment newInstance() {
-        return new ChatsListFragment();
+    public static ChatsFragment newInstance() {
+        return new ChatsFragment();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_chats_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_chats, container, false);
 
         configureRecycleView(view);
 
@@ -53,7 +53,7 @@ public class ChatsListFragment extends Fragment {
         // ---Provisional--------------------------------------------------------------------
 
         List<Friend> friends = new ArrayList<>();
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 1; i <= 3; i++) {
             friends.add(new Friend(i, "Friend", " " + i, "friend" + i + "@mail.com"));
         }
 

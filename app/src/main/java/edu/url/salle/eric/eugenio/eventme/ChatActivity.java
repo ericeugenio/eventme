@@ -82,6 +82,8 @@ public class ChatActivity extends AppCompatActivity {
             mMessageAdapter.notifyDataSetChanged();
 
             // TODO: PUT message on API
+
+            mInputText.setText("");
         }
     }
 
