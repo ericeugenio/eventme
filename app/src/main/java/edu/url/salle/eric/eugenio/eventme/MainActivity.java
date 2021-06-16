@@ -10,7 +10,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+
+import edu.url.salle.eric.eugenio.eventme.fragment.ChatsListFragment;
+import edu.url.salle.eric.eugenio.eventme.fragment.HomeFragment;
+import edu.url.salle.eric.eugenio.eventme.fragment.MyEventsFragment;
+import edu.url.salle.eric.eugenio.eventme.fragment.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.button_nav_home:
                 return HomeFragment.getInstance();
             case R.id.button_nav_chat:
-                return new ChatFragment();
+                return new ChatsListFragment();
             case R.id.button_nav_myEvents:
                 return new MyEventsFragment();
             case R.id.button_nav_profile:

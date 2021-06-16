@@ -9,12 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.imageview.ShapeableImageView;
 
@@ -22,14 +19,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import edu.url.salle.eric.eugenio.eventme.adapters.EventAdapter;
-import edu.url.salle.eric.eugenio.eventme.adapters.FriendAdapter;
-import edu.url.salle.eric.eugenio.eventme.adapters.MessageAdapter;
-import edu.url.salle.eric.eugenio.eventme.model.Event;
+import edu.url.salle.eric.eugenio.eventme.adapter.FriendAdapter;
+import edu.url.salle.eric.eugenio.eventme.adapter.MessageAdapter;
 import edu.url.salle.eric.eugenio.eventme.model.Friend;
 import edu.url.salle.eric.eugenio.eventme.model.Message;
 
-public class IndividualChatActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity {
 
     private static final String EXTRA_FRIEND_ID = "FRIEND_ID";
 
@@ -53,7 +48,7 @@ public class IndividualChatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_individual_chat);
+        setContentView(R.layout.activity_chat);
 
         configureView();
         configureToolbar();
@@ -61,7 +56,7 @@ public class IndividualChatActivity extends AppCompatActivity {
     }
 
     public static Intent newIntent(Context packageContext, int friendID) {
-        Intent intent = new Intent(packageContext, IndividualChatActivity.class);
+        Intent intent = new Intent(packageContext, ChatActivity.class);
         intent.putExtra(EXTRA_FRIEND_ID, friendID);
         return intent;
     }

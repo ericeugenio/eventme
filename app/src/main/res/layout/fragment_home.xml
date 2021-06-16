@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/frag_home"
-    tools:context=".HomeFragment">
+    tools:context=".fragment.HomeFragment">
 
     <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar

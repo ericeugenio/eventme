@@ -1,4 +1,4 @@
-package edu.url.salle.eric.eugenio.eventme.adapters;
+package edu.url.salle.eric.eugenio.eventme.adapter;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;

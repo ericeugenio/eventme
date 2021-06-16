@@ -1,4 +1,4 @@
-package edu.url.salle.eric.eugenio.eventme;
+package edu.url.salle.eric.eugenio.eventme.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
+import edu.url.salle.eric.eugenio.eventme.R;
 
 public class ProfileBottomSheet extends BottomSheetDialogFragment {
 

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/frag_profile"
-    tools:context=".ProfileFragment">
+    tools:context=".fragment.ProfileFragment">
 
     <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar

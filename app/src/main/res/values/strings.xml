@@ -40,10 +40,28 @@
     <!-- Card -->
     <string name="card_event_num_participants">%d / %d</string>
 
+    <!-- Toast -->
+    <string name="toast_login_fill">Please, fill all the gaps</string>
+
     <!-- Profile -->
     <string name="profile_eventsCreated">created</string>
     <string name="profile_eventsJoined">joined</string>
     <string name="profile_friends">friends</string>
+
+    <!-- Login & Signup -->
+    <string name="login_message">Login to Eventme</string>
+    <string name="login_email_hint">Email</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_button">Log In</string>
+    <string name="login_signup_text">Not a member?</string>
+    <string name="login_signup_button">Sing up now</string>
+
+    <string name="signup_message">Create account</string>
+    <string name="signup_username_hint">Username</string>
+    <string name="signup_repeat_password_hint">Repeat password</string>
+    <string name="signup_button">Create Account</string>
+    <string name="signup_login_text">Already a member?</string>
+    <string name="signup_login_button">Log in</string>
 
     <!-- New Event -->
     <string name="newEvent_name">Event title</string>

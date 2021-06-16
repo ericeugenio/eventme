@@ -1,4 +1,4 @@
-package edu.url.salle.eric.eugenio.eventme.adapters;
+package edu.url.salle.eric.eugenio.eventme.adapter;
 
 import android.graphics.Color;
 import android.view.LayoutInflater;

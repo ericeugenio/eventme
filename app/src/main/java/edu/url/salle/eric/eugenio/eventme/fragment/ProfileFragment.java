@@ -1,4 +1,4 @@
-package edu.url.salle.eric.eugenio.eventme;
+package edu.url.salle.eric.eugenio.eventme.fragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -24,7 +24,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import edu.url.salle.eric.eugenio.eventme.adapters.EventAdapter;
+import edu.url.salle.eric.eugenio.eventme.R;
+import edu.url.salle.eric.eugenio.eventme.adapter.EventAdapter;
 import edu.url.salle.eric.eugenio.eventme.model.Event;
 
 public class ProfileFragment extends Fragment {

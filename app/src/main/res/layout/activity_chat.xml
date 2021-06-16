@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".IndividualChatActivity">
+    tools:context=".ChatActivity">
 
     <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
@@ -89,8 +89,8 @@
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="16dp"
-            android:paddingHorizontal="8dp"
-            android:background="@drawable/bg_chip"
+            android:paddingHorizontal="16dp"
+            android:background="@drawable/bg_edit_text_fill"
             android:inputType="text"/>
 
         <ImageButton

@@ -1,4 +1,4 @@
-package edu.url.salle.eric.eugenio.eventme;
+package edu.url.salle.eric.eugenio.eventme.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,27 +14,29 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.url.salle.eric.eugenio.eventme.adapters.FriendAdapter;
+import edu.url.salle.eric.eugenio.eventme.ChatActivity;
+import edu.url.salle.eric.eugenio.eventme.R;
+import edu.url.salle.eric.eugenio.eventme.adapter.FriendAdapter;
 import edu.url.salle.eric.eugenio.eventme.model.Friend;
 
-public class ChatFragment extends Fragment {
+public class ChatsListFragment extends Fragment {
 
     // Recycler view
     private RecyclerView mFriendRecycler;
     private FriendAdapter mFriendAdapter;
 
-    public ChatFragment() {
+    public ChatsListFragment() {
         // Required empty public constructor
     }
 
-    public static ChatFragment newInstance() {
-        return new ChatFragment();
+    public static ChatsListFragment newInstance() {
+        return new ChatsListFragment();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_chat, container, false);
+        View view = inflater.inflate(R.layout.fragment_chats_list, container, false);
 
         configureRecycleView(view);
 
@@ -67,7 +69,7 @@ public class ChatFragment extends Fragment {
 
     private void onCLickStartChatActivity(int position) {
         if (isAdded()) {
-            Intent intent = IndividualChatActivity.newIntent(getActivity(), position);
+            Intent intent = ChatActivity.newIntent(getActivity(), position);
             getActivity().startActivity(intent);
         }
         // TODO: notify activity cannot start
