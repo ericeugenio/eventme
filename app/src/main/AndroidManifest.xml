@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/EventmeTheme">
-        <activity android:name=".EventActivity"></activity>
+        <activity android:name=".StoriesActivity"></activity>
+        <activity android:name=".EventActivity" />
         <activity android:name=".SignupActivity" />
         <activity android:name=".LoginActivity" />
         <activity

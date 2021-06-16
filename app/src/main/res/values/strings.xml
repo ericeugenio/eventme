@@ -63,7 +63,7 @@
     <string name="signup_login_text">Already a member?</string>
     <string name="signup_login_button">Log in</string>
 
-    <!-- New Event -->
+    <!-- Event -->
     <string name="newEvent_name">Event title</string>
     <string name="newEvent_name_hint">Title</string>
     <string name="newEvent_image">Upload an image</string>
@@ -79,5 +79,12 @@
     <string name="newEvent_participants_hint">Number of participants</string>
     <string name="newEvent_type">What type of Event are you planning?</string>
     <string name="newEvent_create">Create Event</string>
+
+    <string name="event_join_button">Join Event</string>
+    <string name="event_joined">joined</string>
+    <string name="event_description">About the event</string>
+    <string name="event_organiser">About the organiser</string>
+    <string name="event_read_more">Read more</string>
+    <string name="event_read_less">Read less</string>
 
 </resources>
