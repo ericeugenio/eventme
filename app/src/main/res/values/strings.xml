@@ -79,7 +79,7 @@
     <string name="newEvent_participants_hint">Number of participants</string>
     <string name="newEvent_type">What type of Event are you planning?</string>
     <string name="newEvent_create">Create Event</string>
-    
+
     <string name="event_join_button">Join Event</string>
     <string name="event_joined">joined</string>
     <string name="event_description">About the event</string>
