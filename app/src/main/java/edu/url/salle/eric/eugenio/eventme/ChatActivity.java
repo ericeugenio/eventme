@@ -26,7 +26,7 @@ import edu.url.salle.eric.eugenio.eventme.model.Message;
 
 public class ChatActivity extends AppCompatActivity {
 
-    private static final String EXTRA_FRIEND_ID = "FRIEND_ID";
+    private static final String EXTRA_FRIEND_POS = "FRIEND_POS";
 
     // Toolbar
     private Toolbar mToolbar;
@@ -54,14 +54,14 @@ public class ChatActivity extends AppCompatActivity {
         configureRecycleView();
     }
 
-    public static Intent newIntent(Context packageContext, int friendID) {
+    public static Intent newIntent(Context packageContext, int friendPos) {
         Intent intent = new Intent(packageContext, ChatActivity.class);
-        intent.putExtra(EXTRA_FRIEND_ID, friendID);
+        intent.putExtra(EXTRA_FRIEND_POS, friendPos);
         return intent;
     }
 
     private void configureView() {
-        int position = getIntent().getIntExtra(EXTRA_FRIEND_ID, 0);
+        int position = getIntent().getIntExtra(EXTRA_FRIEND_POS, 0);
         mFriend = FriendAdapter.getFriends().get(position);
         String name = mFriend.getName() + ' ' + mFriend.getLastName();
 

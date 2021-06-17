@@ -10,16 +10,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiAdapter {
 
+    private static final String BASE_URL = "http://puigmal.salle.url.edu/api/";
+
     private static ApiService apiService;
 
     public static ApiService getInstance() {
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel( HttpLoggingInterceptor.Level.BODY);
-
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        httpClient.addInterceptor(logging);
-
-        String baseUrl = "http://puigmal.salle.url.edu/api/";
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor()
+                .setLevel(HttpLoggingInterceptor.Level.BODY);
 
         Gson gson = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
@@ -27,10 +24,11 @@ public class ApiAdapter {
 
         if (apiService == null) {
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(baseUrl)
+                    .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create(gson))
-                    .client(httpClient.build())
+                    .client(new OkHttpClient.Builder().addInterceptor(logging).build())
                     .build();
+
             apiService = retrofit.create(ApiService.class);
         }
 

@@ -9,6 +9,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import edu.url.salle.eric.eugenio.eventme.api.ApiAdapter;
+import edu.url.salle.eric.eugenio.eventme.api.ApiService;
+import edu.url.salle.eric.eugenio.eventme.model.Token;
+import edu.url.salle.eric.eugenio.eventme.model.User;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class LoginActivity extends AppCompatActivity {
 
     // Widgets
@@ -31,16 +39,31 @@ public class LoginActivity extends AppCompatActivity {
         String email = mEmail.getText().toString();
         String password = mPassword.getText().toString();
 
-        if (!email.isEmpty() && !password.isEmpty()) {
-
-            // TODO: validate info in API
-
-            Intent intent = MainActivity.newIntent(this);
-            startActivity(intent);
-            finish();
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, R.string.toast_form_empty, Toast.LENGTH_SHORT).show();
         }
         else {
-            Toast.makeText(this, R.string.toast_login_fill, Toast.LENGTH_SHORT).show();
+
+            ApiAdapter.getInstance().authenticateUser(email, password).enqueue(new Callback<Token>() {
+                @Override
+                public void onResponse(Call<Token> call, Response<Token> response) {
+                    if (response.isSuccessful()) {
+                        User.getUser().setToken(response.body());
+
+                        Intent intent = MainActivity.newIntent(LoginActivity.this);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else {
+                        Toast.makeText(LoginActivity.this, R.string.api_login_failed, Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Token> call, Throwable t) {
+                    Toast.makeText(LoginActivity.this, R.string.api_connection_failed, Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 

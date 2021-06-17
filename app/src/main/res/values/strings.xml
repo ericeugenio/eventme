@@ -36,7 +36,7 @@
     <string name="chip_music">Music</string>
     <string name="chip_education">Education</string>
     <string name="chip_sport">Sport</string>
-    <string name="chip_game">Game</string>
+    <string name="chip_game">Games</string>
     <string name="chip_travel">Travel</string>
     <string name="chip_other">Other</string>
 
@@ -44,7 +44,10 @@
     <string name="card_event_num_participants">%d / %d</string>
 
     <!-- Toast -->
-    <string name="toast_login_fill">Please, fill all the gaps</string>
+    <string name="toast_form_empty">Please, fill all the gaps</string>
+    <!-- API -->
+    <string name="api_connection_failed">Connection to API failed!</string>
+    <string name="api_login_failed">Invalid Credentials, please try again!</string>
 
     <!-- Profile -->
     <string name="profile_eventsCreated">created</string>
@@ -67,11 +70,16 @@
     <string name="login_signup_button">Sing up now</string>
 
     <string name="signup_message">Create account</string>
-    <string name="signup_username_hint">Username</string>
+    <string name="signup_name_hint">Name</string>
+    <string name="signup_last_name_hint">Last name</string>
     <string name="signup_repeat_password_hint">Repeat password</string>
     <string name="signup_button">Create Account</string>
     <string name="signup_login_text">Already a member?</string>
     <string name="signup_login_button">Log in</string>
+
+    <string name="signup_repeated_password">Passwords must match</string>
+    <string name="signup_password_length">At least 8 characters long</string>
+    <string name="signup_alphanumeric_password">Only alpha-numeric characters</string>
 
     <!-- Event -->
     <string name="newEvent_name">Event title</string>

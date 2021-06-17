@@ -8,22 +8,37 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
 
 import edu.url.salle.eric.eugenio.eventme.R;
 import edu.url.salle.eric.eugenio.eventme.model.Event;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventHolder> {
 
-    private List<Event> mEvents;
+    private static List<Event> mEvents = new ArrayList<>();
     private EventListener mListener;
 
-    public EventAdapter(List<Event> events) {
-        this.mEvents = events;
+    private Fragment mFragment;
+
+    public EventAdapter(Fragment fragment) {
+        this.mFragment = fragment;
+    }
+
+    public static List<Event> getEvents() {
+        return mEvents;
+    }
+
+    public static void setEvents(List<Event> events) {
+        EventAdapter.mEvents = events;
     }
 
     public void setListener(EventListener eventListener) {
@@ -59,8 +74,11 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventHolder>
         TextView numParticipantsTextView = cardView.findViewById(R.id.card_event_num_participants);
 
         // Image
-        //Drawable drawable = ContextCompat.getDrawable(cardView.getContext(), event.getImageID());
-        //imageView.setImageDrawable(drawable);
+        Glide.with(mFragment)
+                .load(event.getImage())
+                .placeholder(R.drawable.img_placeholder_event)
+                .error(Event.getDefaultImage(event.getType()))
+                .into(imageView);
 
         // Type, date, name, location
         String date = (event.getStartDate() == null) ? "Not defined" : dateFormat.format(event.getStartDate());
