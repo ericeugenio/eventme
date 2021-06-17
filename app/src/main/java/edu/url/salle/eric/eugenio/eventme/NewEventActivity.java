@@ -77,7 +77,6 @@ public class NewEventActivity extends AppCompatActivity {
     // TOOLBAR
     // ----------------------------------------------
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_new_event, menu);

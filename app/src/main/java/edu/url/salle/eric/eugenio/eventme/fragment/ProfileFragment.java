@@ -1,6 +1,7 @@
 package edu.url.salle.eric.eugenio.eventme.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,7 +25,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import edu.url.salle.eric.eugenio.eventme.EditProfileActivity;
+import edu.url.salle.eric.eugenio.eventme.LoginActivity;
 import edu.url.salle.eric.eugenio.eventme.R;
+import edu.url.salle.eric.eugenio.eventme.StoriesActivity;
 import edu.url.salle.eric.eugenio.eventme.adapter.EventAdapter;
 import edu.url.salle.eric.eugenio.eventme.model.Event;
 
@@ -90,11 +94,11 @@ public class ProfileFragment extends Fragment {
         mToolbar.setOnMenuItemClickListener(this::onMenuItemClick);
     }
 
-    @SuppressLint("NonConstantResourceId")
     private boolean onMenuItemClick(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.action_editProfile:
-                // TODO: start EditProfile activity
+                Intent intent = EditProfileActivity.newIntent(getActivity());
+                getActivity().startActivity(intent);
                 return true;
             case R.id.action_manageAccount:
                 mBottomSheet.show(getParentFragmentManager(), ProfileBottomSheet.PROFILE_TAG);
@@ -115,11 +119,13 @@ public class ProfileFragment extends Fragment {
     }
 
     private void onClickManageAccount(int actionId) {
-        if (actionId == ProfileBottomSheet.LOGOUT_ID) {
-            // TODO: logout
-            return;
+        if (actionId == ProfileBottomSheet.DELETE_ACCOUNT_ID) {
+            // TODO: delete account
         }
-        // TODO: delete account
+
+        Intent intent = LoginActivity.newIntent(getActivity());
+        getActivity().startActivity(intent);
+        getActivity().finish();
     }
 
 
@@ -128,8 +134,8 @@ public class ProfileFragment extends Fragment {
     // ----------------------------------------------
 
     public void onClickShowTimeline(View view) {
-        // TODO: start Timeline activity
-        Toast.makeText(view.getContext(), "Showing timeline", Toast.LENGTH_SHORT).show();
+        Intent intent = StoriesActivity.newIntent(getActivity());
+        getActivity().startActivity(intent);
     }
 
     // ----------------------------------------------
@@ -185,10 +191,10 @@ public class ProfileFragment extends Fragment {
         mEventRecycler.setAdapter(mEventAdapter);
         mEventRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        mEventAdapter.setListener(this::onCLickStartIndividualChatActivity);
+        mEventAdapter.setListener(this::onClickStartEventActivity);
     }
 
-    private void onCLickStartIndividualChatActivity(int position) {
+    private void onClickStartEventActivity(int position) {
         // TODO: start Event activity
         // Intent intent = new Intent(getActivity(), EventActivity.class);
         // intent.putExtra(EventActivity.EVENT_ID, position);

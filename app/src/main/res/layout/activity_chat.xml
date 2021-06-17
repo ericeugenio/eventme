@@ -52,25 +52,28 @@
         android:layout_height="1dp"
         android:background="@color/gray_300"
 
-        app:layout_constraintTop_toBottomOf="@+id/individual_chat_toolbar"
-        app:layout_constraintBottom_toTopOf="@+id/individual_chat_recyclerview"/>
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout_recyclerView"
+        app:layout_constraintTop_toBottomOf="@+id/individual_chat_toolbar" />
 
     <!-- Message Recycled View -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/individual_chat_recyclerview"
+    <LinearLayout
+        android:id="@id/linearLayout_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white"
 
-        android:elevation="0dp"
-        android:overScrollMode="never"
-        android:fadingEdge="none"
-        android:fadingEdgeLength="0dp"
-        android:requiresFadingEdge="none"
-
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constrainedHeight="true"
-        app:layout_constraintTop_toBottomOf="@+id/view"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout" />
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/view">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/individual_chat_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    </LinearLayout>
 
     <!-- Message sender -->
     <LinearLayout
@@ -80,18 +83,19 @@
         android:background="@color/gray_300"
         android:orientation="horizontal"
 
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout_recyclerView">
 
         <EditText
             android:id="@+id/individual_chat_text"
             android:layout_width="0dp"
             android:layout_height="32dp"
-            android:layout_weight="1"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="16dp"
-            android:paddingHorizontal="16dp"
+            android:layout_weight="1"
             android:background="@drawable/bg_edit_text_fill"
-            android:inputType="text"/>
+            android:inputType="text"
+            android:paddingHorizontal="16dp" />
 
         <ImageButton
             android:id="@+id/individual_chat_send"

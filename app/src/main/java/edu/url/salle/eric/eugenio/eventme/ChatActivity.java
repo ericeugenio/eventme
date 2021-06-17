@@ -37,7 +37,6 @@ public class ChatActivity extends AppCompatActivity {
     private MessageAdapter mMessageAdapter;
     private LinearLayoutManager mLinearLayoutManager;
 
-
     // Widgets
     private ShapeableImageView mProfileImage;
     private TextView mFriendName;

@@ -11,9 +11,12 @@
     <string name="title_profile">Profile</string>
     <string name="title_editProfile">Edit Profile</string>
 
+    <!-- Action -->
     <string name="action_editProfile">Edit Profile</string>
     <string name="action_manageAccount">Manage Account</string>
     <string name="action_cancelNewEvent">Cancel New Event</string>
+    <string name="action_saveProfile">Save Profile</string>
+    <string name="action_discardProfile">Discard Profile</string>
 
     <!-- Search Bar -->
     <string name="searchBar_hint">Search</string>
@@ -47,6 +50,13 @@
     <string name="profile_eventsCreated">created</string>
     <string name="profile_eventsJoined">joined</string>
     <string name="profile_friends">friends</string>
+
+    <string name="profile_change_photo">Change Profile Photo</string>
+    <string name="profile_bio_hint">Bio</string>
+    <string name="profile_private">Private information</string>
+    <string name="profile_old_password_hint">Old Password</string>
+    <string name="profile_new_password_hint">New Password</string>
+    <string name="profile_validate_password">Check New Password</string>
 
     <!-- Login & Signup -->
     <string name="login_message">Login to Eventme</string>
