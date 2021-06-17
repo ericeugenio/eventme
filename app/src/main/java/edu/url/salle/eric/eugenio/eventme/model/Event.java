@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
+import edu.url.salle.eric.eugenio.eventme.R;
+
 public class Event {
 
     @Expose
@@ -139,5 +141,24 @@ public class Event {
 
     public void setEndDate(Date endDate) {
         this.mEndDate = endDate;
+    }
+
+    public static int getDefaultImage(String type) {
+        type = type.toLowerCase();
+
+        switch (type) {
+            case "music":
+                return R.drawable.img_default_music;
+            case "education":
+                return R.drawable.img_default_education;
+            case "sport":
+                return R.drawable.img_default_sport;
+            case "games":
+                return R.drawable.img_default_games;
+            case "travel":
+                return R.drawable.img_default_travel;
+            default:
+                return R.drawable.img_default_event;
+        }
     }
 }

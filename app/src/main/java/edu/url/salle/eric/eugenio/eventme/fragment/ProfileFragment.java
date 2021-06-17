@@ -178,16 +178,17 @@ public class ProfileFragment extends Fragment {
     private void configureRecycleView(View view) {
         mEventRecycler = view.findViewById(R.id.profile_recyclerview_event);
 
-        // ---Provisional--------------------------------------------------------------------
+//        // ---Provisional--------------------------------------------------------------------
+//
+//        List<Event> events = new ArrayList<>();
+//        for (int i = 1; i <= 10; i++) {
+//            events.add(new Event("Event " + i, "Type", "Description",
+//                    100, "Location", new Date(), new Date()));
+//        }
+//
+//        // ----------------------------------------------------------------------------------
 
-        List<Event> events = new ArrayList<>();
-        for (int i = 1; i <= 10; i++) {
-            events.add(new Event("Event " + i, "Type", "Description",
-                    100, "Location", new Date(), new Date()));
-        }
-        // ----------------------------------------------------------------------------------
-
-        mEventAdapter = new EventAdapter(events);
+        mEventAdapter = new EventAdapter(this);
         mEventRecycler.setAdapter(mEventAdapter);
         mEventRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
 

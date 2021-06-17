@@ -99,7 +99,7 @@ public class MyEventsFragment extends Fragment {
         }
         // ----------------------------------------------------------------------------------
 
-        mEventAdapter = new EventAdapter(events);
+        mEventAdapter = new EventAdapter(this);
         mEventRecycler.setAdapter(mEventAdapter);
         mEventRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
 
