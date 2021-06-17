@@ -37,6 +37,7 @@
                 android:background="@color/gray_100"
                 android:padding="2dp"
                 android:scaleType="centerCrop"
+                android:src="@drawable/img_default_profile"
                 app:shapeAppearanceOverlay="@style/profile_image_corner"
                 app:strokeColor="@color/blue_500"
                 app:strokeWidth="2dp" />
