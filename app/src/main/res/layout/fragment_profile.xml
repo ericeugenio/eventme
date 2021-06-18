@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/frag_profile"
+    tools:context=".fragment.ProfileFragment">
+
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/profile_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+
+        app:title="@string/title_profile"
+        app:titleTextAppearance="@style/toolbar_text" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Image, Name and Email -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/profile_image"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@color/gray_100"
+                android:padding="2dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_default_profile"
+                app:shapeAppearanceOverlay="@style/profile_image_corner"
+                app:strokeColor="@color/blue_500"
+                app:strokeWidth="2dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/profile_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="2dp"
+                    android:text="eric.eugenio"
+                    android:textAppearance="@style/bold_text" />
+
+                <TextView
+                    android:id="@+id/profile_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="2dp"
+                    android:text="eric.eugenio@students.salle.url.edu"
+                    android:textAppearance="@style/default_text" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Bio -->
+        <TextView
+            android:id="@+id/profile_bio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pulvinar nibh in felis placerat."
+            android:textAppearance="@style/default_text" />
+
+        <!-- User Stats -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:orientation="horizontal">
+
+            <!-- Events Created -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_chip"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/profile_numEventsCreated"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="283"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/bold_text"
+                    android:textColor="@color/blue_700" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/profile_eventsCreated"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/default_text" />
+
+            </LinearLayout>
+
+            <!-- Events Joined -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_chip"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/profile_numEventsJoined"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="647"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/bold_text"
+                    android:textColor="@color/blue_700" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/profile_eventsJoined"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/default_text" />
+
+            </LinearLayout>
+
+            <!-- Friends -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_chip"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/profile_numFriends"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="150"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/bold_text"
+                    android:textColor="@color/blue_700" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/profile_friends"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/default_text" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_300" />
+
+        <!-- Events Tab -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="12dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/profile_runningEvents"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/tabBar_runningEvents"
+                android:textAlignment="center"
+                android:textAppearance="@style/default_text"
+                android:textColor="@color/color_tab_text" />
+
+            <TextView
+                android:id="@+id/profile_upcomingEvents"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/tabBar_upcomingEvents"
+                android:textAlignment="center"
+                android:textAppearance="@style/default_text"
+                android:textColor="@color/color_tab_text" />
+
+            <TextView
+                android:id="@+id/profile_pastEvents"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/tabBar_pastEvents"
+                android:textAlignment="center"
+                android:textAppearance="@style/default_text"
+                android:textColor="@color/color_tab_text" />
+
+        </LinearLayout>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_300" />
+
+        <!-- Events Recycled View -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/profile_recyclerview_event"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/gray_100"
+            android:scrollbars="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    </LinearLayout>
+
+</LinearLayout>

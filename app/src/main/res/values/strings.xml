@@ -1,0 +1,111 @@
+<resources>
+    <string name="app_name">Eventme</string>
+    <string name="app_name_lowerCase">eventme</string>
+
+    <!-- App Bar -->
+    <string name="title_home">Home</string>
+    <string name="title_chat">Chat</string>
+    <string name="title_MyEvents">My Events</string>
+    <string name="title_newEvent">New Event</string>
+    <string name="title_Events">Events</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_editProfile">Edit Profile</string>
+
+    <!-- Action -->
+    <string name="action_editProfile">Edit Profile</string>
+    <string name="action_manageAccount">Manage Account</string>
+    <string name="action_cancelNewEvent">Cancel New Event</string>
+    <string name="action_discardProfile">Discard Profile</string>
+
+    <!-- Search Bar -->
+    <string name="searchBar_hint">Search</string>
+
+    <!-- Tab Bar -->
+    <string name="tabBar_runningEvents">running events</string>
+    <string name="tabBar_upcomingEvents">upcoming events</string>
+    <string name="tabBar_pastEvents">past events</string>
+
+    <!-- Bottom Sheet -->
+    <string name="bottomSheet_manageAccount">Manage account</string>
+    <string name="bottomSheet_logout">Logout</string>
+    <string name="bottomSheet_deleteAccount">Delete account</string>
+
+    <!-- Chips -->
+    <string name="chip_allEvents">All events</string>
+    <string name="chip_music">Music</string>
+    <string name="chip_education">Education</string>
+    <string name="chip_sport">Sport</string>
+    <string name="chip_game">Games</string>
+    <string name="chip_travel">Travel</string>
+    <string name="chip_other">Other</string>
+
+    <!-- Card -->
+    <string name="card_event_num_participants">%d / %d</string>
+
+    <!-- Toast -->
+    <string name="toast_form_empty">Please, fill all the gaps</string>
+    <string name="toast_to_be_implemented">To be implemented...</string>
+    <!-- API -->
+    <string name="api_connection_failed">Connection to API failed!</string>
+    <string name="api_login_failed">Invalid Credentials, please try again!</string>
+    <string name="api_signup_failed">Invalid email, please enter a new one!</string>
+
+    <!-- Profile -->
+    <string name="profile_eventsCreated">created</string>
+    <string name="profile_eventsJoined">joined</string>
+    <string name="profile_friends">friends</string>
+
+    <string name="profile_change_photo">Change Profile Photo</string>
+    <string name="profile_bio_hint">Bio (Not persisted)</string>
+    <string name="profile_private">Private information</string>
+    <string name="profile_old_password_hint">Old Password</string>
+    <string name="profile_new_password_hint">New Password</string>
+    <string name="profile_validate_password">Check New Password</string>
+    <string name="profile_save_changes">Save Changes</string>
+
+    <!-- Login & Signup -->
+    <string name="login_message">Login to Eventme</string>
+    <string name="login_email_hint">Email</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_button">Log In</string>
+    <string name="login_signup_text">Not a member?</string>
+    <string name="login_signup_button">Sing up now</string>
+
+    <string name="signup_message">Create account</string>
+    <string name="signup_name_hint">Name</string>
+    <string name="signup_last_name_hint">Last name</string>
+    <string name="signup_repeat_password_hint">Repeat password</string>
+    <string name="signup_button">Create Account</string>
+    <string name="signup_login_text">Already a member?</string>
+    <string name="signup_login_button">Log in</string>
+
+    <string name="signup_repeated_password">Passwords must match</string>
+    <string name="signup_password_length">At least 8 characters long</string>
+    <string name="signup_alphanumeric_password">Only alpha-numeric characters</string>
+
+    <!-- Event -->
+    <string name="newEvent_name">Event title</string>
+    <string name="newEvent_name_hint">Title</string>
+    <string name="newEvent_image">Upload an image</string>
+    <string name="newEvent_location">Where will this Event be?</string>
+    <string name="newEvent_location_hint">City, street</string>
+    <string name="newEvent_description">Any additional information?</string>
+    <string name="newEvent_description_hint">Description</string>
+    <string name="newEvent_time">When will this Event be?</string>
+    <string name="newEvent_time_hint">Time</string>
+    <string name="newEvent_starts_hint">Starts</string>
+    <string name="newEvent_ends_hint">Ends</string>
+    <string name="newEvent_participants">How many people do you want to see?</string>
+    <string name="newEvent_participants_hint">Number of participants</string>
+    <string name="newEvent_type">What type of Event are you planning?</string>
+    <string name="newEvent_create">Create Event</string>
+
+    <string name="event_join_button">Join Event</string>
+    <string name="event_cancel_button">Cancel Attendance</string>
+    <string name="event_joined">joined</string>
+    <string name="event_description">About the event</string>
+    <string name="event_organiser">About the organiser</string>
+    <string name="event_read_more">Read more</string>
+    <string name="event_read_less">Read less</string>
+
+</resources>

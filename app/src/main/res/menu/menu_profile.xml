@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_editProfile"
+        android:icon="@drawable/ic_app_bar_edit"
+        android:title="@string/action_editProfile"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_manageAccount"
+        android:icon="@drawable/ic_app_bar_more"
+        android:title="@string/action_manageAccount"
+        app:showAsAction="ifRoom"/>
+
+</menu>
