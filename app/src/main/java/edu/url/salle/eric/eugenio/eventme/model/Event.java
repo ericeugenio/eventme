@@ -9,7 +9,7 @@ import edu.url.salle.eric.eugenio.eventme.R;
 
 public class Event {
 
-    @Expose
+    @Expose(serialize = false)
     @SerializedName("id")
     private long mId;
     @Expose
@@ -25,15 +25,12 @@ public class Event {
     @SerializedName("n_participators")
     private int mTotalParticipants;
     private int mCurrentParticipants;
-
     @Expose
     @SerializedName("image")
     private String mImage;
-
     @Expose
     @SerializedName("location")
     private String mLocation;
-
     private Date mCreationDate;
     @Expose
     @SerializedName("eventStart_date")
@@ -41,6 +38,9 @@ public class Event {
     @Expose
     @SerializedName("eventEnd_date")
     private Date mEndDate;
+    @Expose(serialize = false)
+    @SerializedName("owner_id")
+    private long mOrganiserId;
 
     public Event() {
 
@@ -141,6 +141,14 @@ public class Event {
 
     public void setEndDate(Date endDate) {
         this.mEndDate = endDate;
+    }
+
+    public long getOrganiserId() {
+        return mOrganiserId;
+    }
+
+    public void setOrganiserId(long organiserId) {
+        this.mOrganiserId = organiserId;
     }
 
     public static int getDefaultImage(String type) {

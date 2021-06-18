@@ -1,6 +1,5 @@
 package edu.url.salle.eric.eugenio.eventme.fragment;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -17,12 +16,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import edu.url.salle.eric.eugenio.eventme.EditProfileActivity;
@@ -30,7 +27,13 @@ import edu.url.salle.eric.eugenio.eventme.LoginActivity;
 import edu.url.salle.eric.eugenio.eventme.R;
 import edu.url.salle.eric.eugenio.eventme.StoriesActivity;
 import edu.url.salle.eric.eugenio.eventme.adapter.EventAdapter;
+import edu.url.salle.eric.eugenio.eventme.api.ApiAdapter;
 import edu.url.salle.eric.eugenio.eventme.model.Event;
+import edu.url.salle.eric.eugenio.eventme.model.Friend;
+import edu.url.salle.eric.eugenio.eventme.model.User;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ProfileFragment extends Fragment {
 
@@ -50,8 +53,13 @@ public class ProfileFragment extends Fragment {
     private RecyclerView mEventRecycler;
     private EventAdapter mEventAdapter;
 
-    public ProfileFragment() {
-        // Required empty public constructor
+    // Widgets
+    private ShapeableImageView mProfileImage;
+    private TextView mUsername, mEmail, mBio;
+    private TextView mEventsCreated, mEventsJoined, mFriends;
+
+    private ProfileFragment() {
+        // Required empty private constructor
     }
 
     public static ProfileFragment newInstance() {
@@ -75,11 +83,48 @@ public class ProfileFragment extends Fragment {
         mTimeLineButton = view.findViewById(R.id.profile_image);
         mTimeLineButton.setOnClickListener(this::onClickShowTimeline);
 
+        configureView(view);
         configureButtonSheet();
         configureTab(view);
         configureRecycleView(view);
 
         return view;
+    }
+
+    private void configureView(View view) {
+        mProfileImage = view.findViewById(R.id.profile_image);
+        mUsername = view.findViewById(R.id.profile_username);
+        mEmail = view.findViewById(R.id.profile_email);
+        mBio = view.findViewById(R.id.profile_bio);
+        mEventsCreated = view.findViewById(R.id.profile_numEventsCreated);
+        mEventsJoined = view.findViewById(R.id.profile_numEventsJoined);
+        mFriends = view.findViewById(R.id.profile_numFriends);
+
+        User user = User.getUser();
+
+        // Image
+        Glide.with(this)
+                .load(user.getImage())
+                .placeholder(R.drawable.img_placeholder_event)
+                .error(R.drawable.img_default_profile)
+                .into(mProfileImage);
+
+        // Details
+        String username = user.getName() + " " + user.getLastName();
+        mUsername.setText(username);
+        mEmail.setText(user.getEmail());
+
+        if (user.getBio() == null) {
+            mBio.setVisibility(View.GONE);
+        }
+        else {
+            mBio.setText(user.getBio());
+        }
+
+        // Stats
+        getJoinedEvents();
+        getCreatedEvents();
+        getFriends();
     }
 
     // ----------------------------------------------
@@ -122,6 +167,8 @@ public class ProfileFragment extends Fragment {
         if (actionId == ProfileBottomSheet.DELETE_ACCOUNT_ID) {
             // TODO: delete account
         }
+
+        User.clearUser();
 
         Intent intent = LoginActivity.newIntent(getActivity());
         getActivity().startActivity(intent);
@@ -167,7 +214,16 @@ public class ProfileFragment extends Fragment {
             mSelectedTab = view.findViewById(view.getId());
             mSelectedTab.setSelected(true);
 
-            // TODO: filter recycler view according selected tab
+            // Update events
+            if (mSelectedTab.getText().toString().equals("upcoming events")) {
+                getFutureEvents();
+            }
+            else if (mSelectedTab.getText().toString().equals("past events")) {
+                getPastEvents();
+            }
+            else {
+                getCurrentEvents();;
+            }
         }
     }
 
@@ -192,13 +248,126 @@ public class ProfileFragment extends Fragment {
         mEventRecycler.setAdapter(mEventAdapter);
         mEventRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        mEventAdapter.setListener(this::onClickStartEventActivity);
+        getFutureEvents();
     }
 
-    private void onClickStartEventActivity(int position) {
-        // TODO: start Event activity
-        // Intent intent = new Intent(getActivity(), EventActivity.class);
-        // intent.putExtra(EventActivity.EVENT_ID, position);
-        // getActivity().startActivity(intent);
+    // ----------------------------------------------
+    // API LOGIC
+    // ----------------------------------------------
+
+    private void getJoinedEvents() {
+        String token = User.getUser().getToken();
+        long userId = User.getUser().getId();
+
+        ApiAdapter.getInstance().getJoinedEvents(token, userId).enqueue(new Callback<List<Event>>() {
+            @Override
+            public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+                if (response.isSuccessful()) {
+                    mEventsJoined.setText(String.valueOf(response.body().size()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Event>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void getCreatedEvents() {
+        String token = User.getUser().getToken();
+        long userId = User.getUser().getId();
+
+        ApiAdapter.getInstance().getCreatedEvents(token, userId).enqueue(new Callback<List<Event>>() {
+            @Override
+            public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+                if (response.isSuccessful()) {
+                    mEventsCreated.setText(String.valueOf(response.body().size()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Event>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void getFriends() {
+        String token = User.getUser().getToken();
+
+        ApiAdapter.getInstance().getFriends(token).enqueue(new Callback<List<Friend>>() {
+            @Override
+            public void onResponse(Call<List<Friend>> call, Response<List<Friend>> response) {
+                if (response.isSuccessful()) {
+                    mFriends.setText(String.valueOf(response.body().size()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Friend>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void getFutureEvents() {
+        String token = User.getUser().getToken();
+        long userId = User.getUser().getId();
+
+        ApiAdapter.getInstance().getCreatedFutureEvents(token, userId).enqueue(new Callback<List<Event>>() {
+            @Override
+            public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+                if (response.isSuccessful()) {
+                    EventAdapter.setEvents(response.body());
+                    mEventAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Event>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void getPastEvents() {
+        String token = User.getUser().getToken();
+        long userId = User.getUser().getId();
+
+        ApiAdapter.getInstance().getCreatedPastEvents(token, userId).enqueue(new Callback<List<Event>>() {
+            @Override
+            public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+                if (response.isSuccessful()) {
+                    EventAdapter.setEvents(response.body());
+                    mEventAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Event>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void getCurrentEvents() {
+        String token = User.getUser().getToken();
+        long userId = User.getUser().getId();
+
+        ApiAdapter.getInstance().getCreatedCurrentEvents(token, userId).enqueue(new Callback<List<Event>>() {
+            @Override
+            public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+                if (response.isSuccessful()) {
+                    EventAdapter.setEvents(response.body());
+                    mEventAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Event>> call, Throwable t) {
+
+            }
+        });
     }
 }

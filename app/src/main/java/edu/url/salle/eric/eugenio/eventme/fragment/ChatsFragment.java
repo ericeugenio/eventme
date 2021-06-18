@@ -25,8 +25,8 @@ public class ChatsFragment extends Fragment {
     private RecyclerView mFriendRecycler;
     private FriendAdapter mFriendAdapter;
 
-    public ChatsFragment() {
-        // Required empty public constructor
+    private ChatsFragment() {
+        // Required empty private constructor
     }
 
     public static ChatsFragment newInstance() {

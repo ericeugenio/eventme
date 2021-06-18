@@ -17,7 +17,12 @@ import java.util.List;
 
 import edu.url.salle.eric.eugenio.eventme.R;
 import edu.url.salle.eric.eugenio.eventme.adapter.EventAdapter;
+import edu.url.salle.eric.eugenio.eventme.api.ApiAdapter;
 import edu.url.salle.eric.eugenio.eventme.model.Event;
+import edu.url.salle.eric.eugenio.eventme.model.User;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MyEventsFragment extends Fragment {
 
@@ -28,8 +33,8 @@ public class MyEventsFragment extends Fragment {
     private RecyclerView mEventRecycler;
     private EventAdapter mEventAdapter;
 
-    public MyEventsFragment() {
-        // Required empty public constructor
+    private MyEventsFragment() {
+        // Required empty private constructor
     }
 
     public static MyEventsFragment newInstance() {
@@ -78,10 +83,15 @@ public class MyEventsFragment extends Fragment {
             mSelectedTab = view.findViewById(view.getId());
             mSelectedTab.setSelected(true);
 
-            // TODO: filter recycler view according selected tab
+            // Update events
+            if (mSelectedTab.getText().toString().equals("upcoming events")) {
+                getFutureEvents();
+            }
+            else {
+                getPastEvents();
+            }
         }
     }
-
 
     // ----------------------------------------------
     // RECYCLER VIEW
@@ -90,26 +100,64 @@ public class MyEventsFragment extends Fragment {
     private void configureRecycleView(View view) {
         mEventRecycler = view.findViewById(R.id.myEvents_recyclerview);
 
-        // ---Provisional--------------------------------------------------------------------
-
-        List<Event> events = new ArrayList<>();
-        for (int i = 1; i <= 10; i++) {
-            events.add(new Event("Event " + i, "Type", "Description",
-                    100, "Location", new Date(), new Date()));
-        }
-        // ----------------------------------------------------------------------------------
+//        // ---Provisional--------------------------------------------------------------------
+//
+//        List<Event> events = new ArrayList<>();
+//        for (int i = 1; i <= 10; i++) {
+//            events.add(new Event("Event " + i, "Type", "Description",
+//                    100, "Location", new Date(), new Date()));
+//        }
+//        // ----------------------------------------------------------------------------------
 
         mEventAdapter = new EventAdapter(this);
         mEventRecycler.setAdapter(mEventAdapter);
         mEventRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        mEventAdapter.setListener(this::onCLickStartEventActivity);
+        getFutureEvents();
     }
 
-    private void onCLickStartEventActivity(int position) {
-        // TODO: start Event activity
-        // Intent intent = new Intent(getActivity(), EventActivity.class);
-        // intent.putExtra(EventActivity.EVENT_ID, position);
-        // getActivity().startActivity(intent);
+    // ----------------------------------------------
+    // API LOGIC
+    // ----------------------------------------------
+
+    private void getFutureEvents() {
+        String token = User.getUser().getToken();
+        long userId = User.getUser().getId();
+
+        ApiAdapter.getInstance().getJoinedFutureEvents(token, userId).enqueue(new Callback<List<Event>>() {
+            @Override
+            public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+                if (response.isSuccessful()) {
+                    EventAdapter.setEvents(response.body());
+                    mEventAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Event>> call, Throwable t) {
+
+            }
+        });
     }
+
+    private void getPastEvents() {
+        String token = User.getUser().getToken();
+        long userId = User.getUser().getId();
+
+        ApiAdapter.getInstance().getJoinedPastEvents(token, userId).enqueue(new Callback<List<Event>>() {
+            @Override
+            public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+                if (response.isSuccessful()) {
+                    EventAdapter.setEvents(response.body());
+                    mEventAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Event>> call, Throwable t) {
+
+            }
+        });
+    }
+
 }

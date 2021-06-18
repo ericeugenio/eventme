@@ -48,6 +48,7 @@
     <!-- API -->
     <string name="api_connection_failed">Connection to API failed!</string>
     <string name="api_login_failed">Invalid Credentials, please try again!</string>
+    <string name="api_signup_failed">Invalid email, please enter a new one!</string>
 
     <!-- Profile -->
     <string name="profile_eventsCreated">created</string>
@@ -99,6 +100,7 @@
     <string name="newEvent_create">Create Event</string>
 
     <string name="event_join_button">Join Event</string>
+    <string name="event_cancel_button">Cancel Attendance</string>
     <string name="event_joined">joined</string>
     <string name="event_description">About the event</string>
     <string name="event_organiser">About the organiser</string>

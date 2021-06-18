@@ -28,11 +28,10 @@ import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
 
-    private static HomeFragment mHomeFragment;
-
     // Recycler view
     private RecyclerView mEventRecycler;
     private EventAdapter mEventAdapter;
+    private LinearLayoutManager mLinearLayoutManager;
 
     // Filter chips
     private Button mSelectedChip;
@@ -41,12 +40,8 @@ public class HomeFragment extends Fragment {
         // Required empty private constructor
     }
 
-    public static HomeFragment getInstance() {
-        if (mHomeFragment == null) {
-            mHomeFragment = new HomeFragment();
-        }
-
-        return mHomeFragment;
+    public static HomeFragment newInstance() {
+        return new HomeFragment();
     }
 
     @Override
@@ -99,11 +94,12 @@ public class HomeFragment extends Fragment {
             mSelectedChip = view.findViewById(view.getId());
             mSelectedChip.setSelected(true);
 
-            if (mSelectedChip.getText().toString().equals("All events")) {
-                updateEvents(null);
-                return;
-            }
-            updateEvents(mSelectedChip.getText().toString());
+            // Update events
+            String selectedChip = mSelectedChip.getText().toString();
+            String type = (selectedChip.equals("All events")) ? null : selectedChip;
+            updateEvents(type);
+
+            mLinearLayoutManager.scrollToPosition(0);
         }
     }
 
@@ -114,16 +110,6 @@ public class HomeFragment extends Fragment {
     private void configureRecycleView(View view) {
         mEventRecycler = view.findViewById(R.id.home_recyclerview_event);
 
-        mEventAdapter = new EventAdapter(this);
-        mEventAdapter.setListener(this::onCLickStartEventActivity);
-
-        mEventRecycler.setAdapter(mEventAdapter);
-        mEventRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        if (EventAdapter.getEvents().isEmpty()) {
-           updateEvents(null);
-        }
-
 //        // ---Provisional--------------------------------------------------------------------
 //
 //        List<Event> events = new ArrayList<>();
@@ -133,6 +119,15 @@ public class HomeFragment extends Fragment {
 //        }
 //
 //        // ----------------------------------------------------------------------------------
+
+        mEventAdapter = new EventAdapter(this);
+        mEventAdapter.setListener(this::onCLickStartEventActivity);
+
+        mEventRecycler.setAdapter(mEventAdapter);
+        mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        mEventRecycler.setLayoutManager(mLinearLayoutManager);
+
+        updateEvents(null);
     }
 
     private void onCLickStartEventActivity(int position) {

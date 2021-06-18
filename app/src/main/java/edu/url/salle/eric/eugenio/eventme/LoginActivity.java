@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.List;
+
 import edu.url.salle.eric.eugenio.eventme.api.ApiAdapter;
 import edu.url.salle.eric.eugenio.eventme.api.ApiService;
 import edu.url.salle.eric.eugenio.eventme.model.Token;
@@ -48,11 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Token> call, Response<Token> response) {
                     if (response.isSuccessful()) {
-                        User.getUser().setToken(response.body());
-
-                        Intent intent = MainActivity.newIntent(LoginActivity.this);
-                        startActivity(intent);
-                        finish();
+                        getUser(response.body(), email);
                     }
                     else {
                         Toast.makeText(LoginActivity.this, R.string.api_login_failed, Toast.LENGTH_SHORT).show();
@@ -65,6 +63,29 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void getUser(Token token, String email) {
+        ApiAdapter.getInstance().searchUser("Bearer " + token.getToken(), email).enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                if (response.isSuccessful()) {
+                    User user = response.body().get(0);
+                    user.setToken(token);
+
+                    User.getUser().updateUser(user);
+
+                    Intent intent = MainActivity.newIntent(LoginActivity.this);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+
+            }
+        });
     }
 
     public void onClickGoToSignup(View view) {

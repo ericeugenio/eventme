@@ -13,6 +13,7 @@ import java.io.IOException;
 
 import edu.url.salle.eric.eugenio.eventme.api.ApiAdapter;
 import edu.url.salle.eric.eugenio.eventme.api.ApiService;
+import edu.url.salle.eric.eugenio.eventme.model.Token;
 import edu.url.salle.eric.eugenio.eventme.model.User;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -55,27 +56,31 @@ public class SignupActivity extends AppCompatActivity {
             if (password.length() < 8) {
                 mPassword.setText("");
                 mPassword.setHint(R.string.signup_password_length);
-                mPassword.setHintTextColor(getResources().getColor(R.color.red_300));
+                mPassword.setHintTextColor(getColor(R.color.red_300));
             }
             // Only alphanumeric characters
-            else if (!isAlphaNumeric(password)) {
+            else if (!password.matches("^[a-zA-Z0-9]*$")) {
                 mPassword.setText("");
                 mPassword.setHint(R.string.signup_alphanumeric_password);
-                mPassword.setHintTextColor(getResources().getColor(R.color.red_300));
+                mPassword.setHintTextColor(getColor(R.color.red_300));
             }
             // Matching passwords
             else if (!password.equals(repeatedPassword)) {
                 mRepeatedPassword.setText("");
                 mRepeatedPassword.setHint(R.string.signup_repeated_password);
-                mRepeatedPassword.setHintTextColor(getResources().getColor(R.color.red_300));
+                mRepeatedPassword.setHintTextColor(getColor(R.color.red_300));
             }
             else {
-                User user = new User(name, lastName, email, password, null);
+                User user = new User(name, lastName, email, password, "null");
                 ApiAdapter.getInstance().registerUser(user).enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
                         if (response.isSuccessful()) {
-                            finish();
+                            authenticateUser(user);
+                        }
+                        else {
+                            Toast.makeText(SignupActivity.this, R.string.api_signup_failed, Toast.LENGTH_SHORT).show();
+                            mEmail.setTextColor(getColor(R.color.red_300));
                         }
                     }
 
@@ -88,15 +93,31 @@ public class SignupActivity extends AppCompatActivity {
         }
     }
 
-    public void onClickGoToLogin(View view) {
-        finish();
+    private void authenticateUser(User user) {
+        ApiAdapter.getInstance().authenticateUser(user.getEmail(), user.getPassword()).enqueue(new Callback<Token>() {
+            @Override
+            public void onResponse(Call<Token> call, Response<Token> response) {
+                if (response.isSuccessful()) {
+                    user.setToken(response.body());
+                    User.getUser().updateUser(user);
+
+                    Intent intent = MainActivity.newIntent(SignupActivity.this);
+                    startActivity(intent);
+                    finish();
+                }
+                else {
+                    Toast.makeText(SignupActivity.this, R.string.api_login_failed, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Token> call, Throwable t) {
+                Toast.makeText(SignupActivity.this, R.string.api_connection_failed, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    // ----------------------------------------------
-    // VALIDATIONS
-    // ----------------------------------------------
-
-    public boolean isAlphaNumeric(String s) {
-        return s.matches("^[a-zA-Z0-9]*$");
+    public void onClickGoToLogin(View view) {
+        finish();
     }
 }

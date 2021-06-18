@@ -5,7 +5,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class User {
 
-    private static User user;
+    // User authenticated
+    private static User mUser;
 
     private Token mToken;
     @Expose(serialize = false)
@@ -27,6 +28,8 @@ public class User {
     @SerializedName("image")
     private String mImage;
 
+    private String mBio;
+
     public User() {
     }
 
@@ -39,11 +42,24 @@ public class User {
     }
 
     public static User getUser() {
-        if (user == null) {
-            user = new User();
+        if (mUser == null) {
+            mUser = new User();
         }
 
-        return user;
+        return mUser;
+    }
+
+    public static void clearUser() {
+        mUser = null;
+    }
+
+    public void updateUser(User user) {
+        this.mId = user.mId;
+        this.mToken = user.mToken;
+        this.mName = user.mName;
+        this.mLastName = user.mLastName;
+        this.mEmail = user.mEmail;
+        this.mPassword = user.mPassword;
     }
 
     public String getToken() {
@@ -51,7 +67,16 @@ public class User {
     }
 
     public void setToken(Token token) {
+        token.extendToken();
         this.mToken = token;
+    }
+
+    public long getId() {
+        return mId;
+    }
+
+    public void setId(long id) {
+        this.mId = id;
     }
 
     public String getName() {
@@ -92,5 +117,13 @@ public class User {
 
     public void setImage(String image) {
         this.mImage = image;
+    }
+
+    public String getBio() {
+        return mBio;
+    }
+
+    public void setBio(String bio) {
+        this.mBio = bio;
     }
 }

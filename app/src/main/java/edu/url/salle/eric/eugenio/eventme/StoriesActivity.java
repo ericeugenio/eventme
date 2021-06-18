@@ -22,7 +22,7 @@ public class StoriesActivity extends AppCompatActivity implements View.OnTouchLi
 
     // Hold
     // Duration in ms
-    private final static long STORIES_DURATION = 2000L;
+    private final static long STORIES_DURATION = 3000L;
     private final static long MIN_PRESS_DURATION = 500L;
     private long pressDuration;
 
@@ -55,11 +55,11 @@ public class StoriesActivity extends AppCompatActivity implements View.OnTouchLi
 
         // ---Provisional--------------------------------------------------------------------
 
-//        mTimeline = new ArrayList<>();
-//        mTimeline.add(R.drawable.img_story1);
-//        mTimeline.add(R.drawable.img_story2);
-//        mTimeline.add(R.drawable.img_story3);
-//        mTimeline.add(R.drawable.img_story4);
+        mTimeline = new ArrayList<>();
+        mTimeline.add(R.drawable.img_story1);
+        mTimeline.add(R.drawable.img_story2);
+        mTimeline.add(R.drawable.img_story3);
+        mTimeline.add(R.drawable.img_story4);
 
         // ----------------------------------------------------------------------------------
 
