@@ -46,12 +46,13 @@ public class Event {
 
     }
 
-    public Event(String name, String type, String description, int totalParticipants, String location, Date startDate, Date endDate) {
+    public Event(String name, String type, String description, int totalParticipants, String location, String image, Date startDate, Date endDate) {
         this.mName = name;
         this.mType = type;
         this.mDescription = description;
         this.mTotalParticipants = totalParticipants;
         this.mLocation = location;
+        this.mImage = image;
         this.mStartDate = startDate;
         this.mEndDate = endDate;
 

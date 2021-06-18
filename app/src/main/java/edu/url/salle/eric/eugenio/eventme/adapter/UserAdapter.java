@@ -1,6 +1,5 @@
 package edu.url.salle.eric.eugenio.eventme.adapter;
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.view.View;
@@ -8,26 +7,35 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.url.salle.eric.eugenio.eventme.R;
-import edu.url.salle.eric.eugenio.eventme.model.Friend;
+import edu.url.salle.eric.eugenio.eventme.model.User;
 
-public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHolder> {
+public class UserAdapter extends RecyclerView.Adapter<UserAdapter.FriendHolder> {
 
-    private static List<Friend> mFriends;
+    private static List<User> mFriends = new ArrayList<>();
     private FriendListener mListener;
 
-    public FriendAdapter(List<Friend> friends) {
-        mFriends = friends;
+    private Fragment mFragment;
+
+    public UserAdapter(Fragment fragment) {
+        this.mFragment = fragment;
     }
 
-    public static List<Friend> getFriends() {
+    public static List<User> getFriends() {
         return mFriends;
+    }
+
+    public static void setFriends(List<User> friends) {
+        UserAdapter.mFriends = friends;
     }
 
     public void setListener(FriendListener friendListener) {
@@ -43,29 +51,30 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHold
     @Override
     public FriendHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         CardView cardView = (CardView) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_friend_layout, parent, false);
+                .inflate(R.layout.card_user_layout, parent, false);
         return new FriendHolder(cardView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull FriendHolder holder, final int position) {
         CardView cardView = holder.cardView;
-        Friend friend = mFriends.get(position);
+        User friend = mFriends.get(position);
 
         ShapeableImageView profileImageView = cardView.findViewById(R.id.card_friend_image);
         TextView nameTextView = cardView.findViewById(R.id.card_friend_name);
         TextView lastMessageTextView = cardView.findViewById(R.id.card_friend_lastMessage);
-        View notificationView = cardView.findViewById(R.id.card_chat_notification);
 
         // Image
-        // TODO: place friend image
+        Glide.with(mFragment)
+                .load(friend.getImage())
+                .placeholder(R.drawable.img_placeholder_event)
+                .error(R.drawable.img_default_profile)
+                .into(profileImageView);
+
         // Text
         String username = friend.getName() + friend.getLastName();
         nameTextView.setText(username);
         lastMessageTextView.setText(friend.getEmail());
-
-        // Notification
-        if (position % 2 == 0) notificationView.setBackgroundColor(Color.WHITE);
 
         // Set onCLick operation
         cardView.setOnClickListener(new View.OnClickListener() {

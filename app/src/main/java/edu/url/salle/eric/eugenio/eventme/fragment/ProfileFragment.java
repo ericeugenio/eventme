@@ -23,14 +23,15 @@ import com.google.android.material.imageview.ShapeableImageView;
 import java.util.List;
 
 import edu.url.salle.eric.eugenio.eventme.EditProfileActivity;
+import edu.url.salle.eric.eugenio.eventme.EventActivity;
 import edu.url.salle.eric.eugenio.eventme.LoginActivity;
 import edu.url.salle.eric.eugenio.eventme.R;
 import edu.url.salle.eric.eugenio.eventme.StoriesActivity;
 import edu.url.salle.eric.eugenio.eventme.adapter.EventAdapter;
 import edu.url.salle.eric.eugenio.eventme.api.ApiAdapter;
 import edu.url.salle.eric.eugenio.eventme.model.Event;
-import edu.url.salle.eric.eugenio.eventme.model.Friend;
 import edu.url.salle.eric.eugenio.eventme.model.User;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -165,8 +166,27 @@ public class ProfileFragment extends Fragment {
 
     private void onClickManageAccount(int actionId) {
         if (actionId == ProfileBottomSheet.DELETE_ACCOUNT_ID) {
-            // TODO: delete account
+            String token = User.getUser().getToken();
+            ApiAdapter.getInstance().deleteUser(token).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.isSuccessful()) {
+                      logoutLogic();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                }
+            });
+            return;
         }
+
+        logoutLogic();
+    }
+
+    private void logoutLogic() {
 
         User.clearUser();
 
@@ -245,10 +265,19 @@ public class ProfileFragment extends Fragment {
 //        // ----------------------------------------------------------------------------------
 
         mEventAdapter = new EventAdapter(this);
+        mEventAdapter.setListener(this::onCLickStartEventActivity);
+
         mEventRecycler.setAdapter(mEventAdapter);
         mEventRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        getFutureEvents();
+        getCurrentEvents();
+    }
+
+    private void onCLickStartEventActivity(int position) {
+        if (isAdded()) {
+            Intent intent = EventActivity.newIntent(getActivity(), position);
+            getActivity().startActivity(intent);
+        }
     }
 
     // ----------------------------------------------
@@ -296,16 +325,16 @@ public class ProfileFragment extends Fragment {
     private void getFriends() {
         String token = User.getUser().getToken();
 
-        ApiAdapter.getInstance().getFriends(token).enqueue(new Callback<List<Friend>>() {
+        ApiAdapter.getInstance().getFriends(token).enqueue(new Callback<List<User>>() {
             @Override
-            public void onResponse(Call<List<Friend>> call, Response<List<Friend>> response) {
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
                 if (response.isSuccessful()) {
                     mFriends.setText(String.valueOf(response.body().size()));
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Friend>> call, Throwable t) {
+            public void onFailure(Call<List<User>> call, Throwable t) {
 
             }
         });
@@ -319,8 +348,12 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
                 if (response.isSuccessful()) {
-                    EventAdapter.setEvents(response.body());
-                    mEventAdapter.notifyDataSetChanged();
+                    List<Event> events = response.body();
+                    if (events != null) {
+                        events.sort((e1, e2) -> e1.getStartDate().compareTo(e2.getStartDate()));
+                        EventAdapter.setEvents(events);
+                        mEventAdapter.notifyDataSetChanged();
+                    }
                 }
             }
 
@@ -339,8 +372,13 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
                 if (response.isSuccessful()) {
-                    EventAdapter.setEvents(response.body());
-                    mEventAdapter.notifyDataSetChanged();
+                    List<Event> events = response.body();
+                    if (events != null) {
+                        events.sort((e1, e2) -> e1.getStartDate().compareTo(e2.getStartDate()));
+                        EventAdapter.setEvents(events);
+                        mEventAdapter.notifyDataSetChanged();
+                    }
+
                 }
             }
 
@@ -359,7 +397,10 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
                 if (response.isSuccessful()) {
-                    EventAdapter.setEvents(response.body());
+                    List<Event> events = response.body();
+                    events.sort((e1, e2) -> e1.getStartDate().compareTo(e2.getStartDate()));
+
+                    EventAdapter.setEvents(events);
                     mEventAdapter.notifyDataSetChanged();
                 }
             }

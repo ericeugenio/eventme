@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class Message {
 
-    @Expose
+    @Expose(serialize = false)
     @SerializedName("id")
     private long mMessageId;
     @Expose
@@ -19,7 +19,7 @@ public class Message {
     @Expose
     @SerializedName("user_id_recived")
     private long mReceiverId;
-    @Expose
+    @Expose(serialize = false)
     @SerializedName("timeStamp")
     private Date mDate;
 

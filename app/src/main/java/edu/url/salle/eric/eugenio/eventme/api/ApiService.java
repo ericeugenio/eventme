@@ -4,7 +4,7 @@ import java.util.List;
 
 import edu.url.salle.eric.eugenio.eventme.model.Attendance;
 import edu.url.salle.eric.eugenio.eventme.model.Event;
-import edu.url.salle.eric.eugenio.eventme.model.Friend;
+import edu.url.salle.eric.eugenio.eventme.model.Message;
 import edu.url.salle.eric.eugenio.eventme.model.Token;
 import edu.url.salle.eric.eugenio.eventme.model.User;
 import okhttp3.ResponseBody;
@@ -16,6 +16,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -32,11 +33,17 @@ public interface ApiService {
     @POST("users")
     Call<User> registerUser(@Body User user);
 
+    @PUT("users/")
+    Call<User> updateUser(@Header("Authorization") String token, @Body User user);
+
     @GET("users/search/")
     Call<List<User>> searchUser(@Header("Authorization") String token, @Query("s") String name);
 
     @GET("users/{ID}")
     Call<List<User>> getUser(@Header("Authorization") String token, @Path("ID") long userId);
+
+    @DELETE("users")
+    Call<ResponseBody> deleteUser(@Header("Authorization") String token);
 
     // ----------------------------------------------
     // EVENTS
@@ -99,10 +106,16 @@ public interface ApiService {
     // ----------------------------------------------
 
     @GET("messages/users")
-    Call<List<Friend>> getFriends(@Header("Authorization") String token);
+    Call<List<User>> getFriends(@Header("Authorization") String token);
 
     // ----------------------------------------------
     // MESSAGES
     // ----------------------------------------------
+
+    @POST("messages")
+    Call<Message> sendMessage(@Header("Authorization") String token, @Body Message message);
+
+    @GET("messages/{USER_ID}")
+    Call<List<Message>> getMessages(@Header("Authorization") String token, @Path("USER_ID") long userId);
 
 }

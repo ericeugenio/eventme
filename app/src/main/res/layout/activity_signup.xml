@@ -24,6 +24,7 @@
         android:background="@color/gray_100"
         android:padding="2dp"
         android:scaleType="centerCrop"
+        android:onClick="onCLickAddPhoto"
         android:src="@drawable/img_default_profile"
 
         app:strokeColor="@color/gray_300"

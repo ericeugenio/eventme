@@ -8,24 +8,30 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.url.salle.eric.eugenio.eventme.R;
 import edu.url.salle.eric.eugenio.eventme.model.Message;
+import edu.url.salle.eric.eugenio.eventme.model.User;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageHolder> {
 
     public static final int MESSAGE_RECEIVED = 0;
     public static final int MESSAGE_SENT = 1;
 
-    private static List<Message> mMessages;
-
-    public MessageAdapter(List<Message> messages) {
-        mMessages = messages;
-    }
+    private static List<Message> mMessages = new ArrayList<>();
 
     public static List<Message> getMessages() {
         return mMessages;
+    }
+
+    public static void setMessages(List<Message> messages) {
+        MessageAdapter.mMessages = messages;
+    }
+
+    public static void clearMessages() {
+        mMessages.clear();
     }
 
     @Override
@@ -35,8 +41,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
 
     @Override
     public int getItemViewType(int position) {
-        // TODO: get authenticated user id
-        long userId = 1;
+        long userId = User.getUser().getId();
         long senderId = mMessages.get(position).getSenderId();
         return (senderId == userId) ? MESSAGE_SENT : MESSAGE_RECEIVED;
     }

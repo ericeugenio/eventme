@@ -4,12 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_saveProfile"
-        android:icon="@drawable/ic_app_bar_check"
-        android:title="@string/action_saveProfile"
-        app:showAsAction="ifRoom"/>
-
-    <item
         android:id="@+id/action_discardProfile"
         android:icon="@drawable/ic_app_bar_clear"
         android:title="@string/action_discardProfile"

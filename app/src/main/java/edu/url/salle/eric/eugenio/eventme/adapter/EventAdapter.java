@@ -69,8 +69,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventHolder>
         TextView dateTextView = cardView.findViewById(R.id.card_event_date);
         TextView nameTextView = cardView.findViewById(R.id.card_event_name);
         TextView locationTextView = cardView.findViewById(R.id.card_event_location);
-        View participantsTextView = cardView.findViewById(R.id.card_event_participants);
-        View currentParticipantsTextView = cardView.findViewById(R.id.card_event_current_participants);
         TextView numParticipantsTextView = cardView.findViewById(R.id.card_event_num_participants);
 
         // Image
@@ -89,12 +87,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventHolder>
         locationTextView.setText(event.getLocation());
 
         // Participants
-        int participantsBarWidth = participantsTextView.getWidth();
-        int currentParticipantsBarWidth = (event.getCurrentParticipants() * participantsBarWidth) / event.getTotalParticipants();
-        //currentParticipantsTextView.setWidth(currentParticipantsBarWidth);
-
-        String numParticipants = event.getCurrentParticipants() + "/" + event.getTotalParticipants();
-        numParticipantsTextView.setText(numParticipants);
+        String participants = "Maximum participants: " + event.getTotalParticipants();
+        numParticipantsTextView.setText(participants);
 
         // Set onCLick operation
         cardView.setOnClickListener(new View.OnClickListener() {

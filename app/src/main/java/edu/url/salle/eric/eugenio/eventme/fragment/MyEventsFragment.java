@@ -1,5 +1,6 @@
 package edu.url.salle.eric.eugenio.eventme.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import edu.url.salle.eric.eugenio.eventme.EventActivity;
 import edu.url.salle.eric.eugenio.eventme.R;
 import edu.url.salle.eric.eugenio.eventme.adapter.EventAdapter;
 import edu.url.salle.eric.eugenio.eventme.api.ApiAdapter;
@@ -110,10 +112,19 @@ public class MyEventsFragment extends Fragment {
 //        // ----------------------------------------------------------------------------------
 
         mEventAdapter = new EventAdapter(this);
+        mEventAdapter.setListener(this::onCLickStartEventActivity);
+
         mEventRecycler.setAdapter(mEventAdapter);
         mEventRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         getFutureEvents();
+    }
+
+    private void onCLickStartEventActivity(int position) {
+        if (isAdded()) {
+            Intent intent = EventActivity.newIntent(getActivity(), position);
+            getActivity().startActivity(intent);
+        }
     }
 
     // ----------------------------------------------
@@ -128,8 +139,12 @@ public class MyEventsFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
                 if (response.isSuccessful()) {
-                    EventAdapter.setEvents(response.body());
-                    mEventAdapter.notifyDataSetChanged();
+                    List<Event> events = response.body();
+                    if (events != null) {
+                        events.sort((e1, e2) -> e1.getStartDate().compareTo(e2.getStartDate()));
+                        EventAdapter.setEvents(events);
+                        mEventAdapter.notifyDataSetChanged();
+                    }
                 }
             }
 
@@ -148,8 +163,12 @@ public class MyEventsFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
                 if (response.isSuccessful()) {
-                    EventAdapter.setEvents(response.body());
-                    mEventAdapter.notifyDataSetChanged();
+                    List<Event> events = response.body();
+                    if (events != null) {
+                        events.sort((e1, e2) -> e1.getStartDate().compareTo(e2.getStartDate()));
+                        EventAdapter.setEvents(events);
+                        mEventAdapter.notifyDataSetChanged();
+                    }
                 }
             }
 

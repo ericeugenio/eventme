@@ -120,4 +120,9 @@ public class SignupActivity extends AppCompatActivity {
     public void onClickGoToLogin(View view) {
         finish();
     }
+
+    public void onCLickAddPhoto(View view) {
+        // TODO: add a photo url
+        Toast.makeText(this, R.string.toast_to_be_implemented, Toast.LENGTH_SHORT).show();
+    }
 }

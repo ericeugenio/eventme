@@ -93,5 +93,4 @@
             android:textColor="@color/white"
             android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pulvinar nibh in felis placerat, a porttitor ligula rutrum. Vestibulum mollis porta nibh vel scelerisque. Donec viverra massa ac blandit mattis. Ut consectetur nibh vel porttitor ultricies." />
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/profile_bottom_sheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -52,7 +53,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/bottomSheet_deleteAccount"
-            android:src="@drawable/ic_bottom_sheet_delete" />
+            android:src="@drawable/ic_bottom_sheet_delete"
+
+            app:tint="@color/red_300" />
 
         <TextView
             android:id="@+id/bottomSheet_deleteAccount"
@@ -60,6 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="@string/bottomSheet_deleteAccount"
+            android:textColor="@color/red_300"
             android:textAppearance="@style/default_text" />
 
     </LinearLayout>

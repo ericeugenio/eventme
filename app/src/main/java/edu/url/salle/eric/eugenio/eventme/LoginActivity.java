@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Token> call, Response<Token> response) {
                     if (response.isSuccessful()) {
-                        getUser(response.body(), email);
+                        getUser(response.body(), email, password);
                     }
                     else {
                         Toast.makeText(LoginActivity.this, R.string.api_login_failed, Toast.LENGTH_SHORT).show();
@@ -65,13 +65,14 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void getUser(Token token, String email) {
+    private void getUser(Token token, String email, String password) {
         ApiAdapter.getInstance().searchUser("Bearer " + token.getToken(), email).enqueue(new Callback<List<User>>() {
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
                 if (response.isSuccessful()) {
                     User user = response.body().get(0);
                     user.setToken(token);
+                    user.setPassword(password);
 
                     User.getUser().updateUser(user);
 

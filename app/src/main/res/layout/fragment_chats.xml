@@ -23,21 +23,12 @@
         android:background="@drawable/bg_edit_text_fill"
         android:backgroundTint="@color/gray_300">
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="center"
-            android:layout_marginHorizontal="8dp"
-            android:src="@drawable/ic_general_search" />
-
-        <EditText
-            android:id="@+id/chat_search"
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/chat_searchView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:background="@color/transparent"
-            android:hint="@string/searchBar_hint"
-            android:inputType="text" />
+            app:queryHint="@string/searchBar_hint"/>
+
     </LinearLayout>
 
     <!-- Divider -->
@@ -54,5 +45,6 @@
         android:layout_height="match_parent"
         android:scrollbars="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
 
 </LinearLayout>

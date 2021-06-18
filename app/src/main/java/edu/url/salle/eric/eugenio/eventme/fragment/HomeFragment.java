@@ -6,11 +6,13 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -36,6 +38,12 @@ public class HomeFragment extends Fragment {
     // Filter chips
     private Button mSelectedChip;
 
+    // Refresh layout
+    private SwipeRefreshLayout mRefresh;
+
+    // Progress bar
+    private ProgressBar mProgressBar;
+
     private HomeFragment() {
         // Required empty private constructor
     }
@@ -49,8 +57,20 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        mProgressBar = view.findViewById(R.id.home_progressbar);
         configureChips(view);
         configureRecycleView(view);
+        mRefresh = view.findViewById(R.id.home_refresh);
+        mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Update events
+                String selectedChip = mSelectedChip.getText().toString();
+                String type = (selectedChip.equals("All events")) ? null : selectedChip;
+                updateEvents(type);
+                mRefresh.setRefreshing(false);
+            }
+        });
 
         return view;
     }
@@ -142,11 +162,15 @@ public class HomeFragment extends Fragment {
     // ----------------------------------------------
 
     private void updateEvents(String type) {
+        mProgressBar.setVisibility(View.VISIBLE);
         ApiAdapter.getInstance().getAllEvents(type).enqueue(new Callback<List<Event>>() {
             @Override
             public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
-                EventAdapter.setEvents(filterPastEvents(response.body()));
-                mEventAdapter.notifyDataSetChanged();
+                if (response.isSuccessful()) {
+                    mProgressBar.setVisibility(View.GONE);
+                    EventAdapter.setEvents(filterPastEvents(response.body()));
+                    mEventAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override

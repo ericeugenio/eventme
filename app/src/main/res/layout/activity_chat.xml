@@ -75,6 +75,7 @@
             android:id="@+id/individual_chat_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="8dp"
 
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
     </LinearLayout>
@@ -97,6 +98,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="16dp"
             android:layout_weight="1"
+            android:maxLength="45"
             android:background="@drawable/bg_edit_text_fill"
             android:inputType="text"
             android:paddingHorizontal="16dp" />

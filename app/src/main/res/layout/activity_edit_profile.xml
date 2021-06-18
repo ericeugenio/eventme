@@ -39,7 +39,7 @@
         android:onClick="onClickUpdatePhoto" />
 
     <EditText
-        android:id="@+id/edit_profile_username"
+        android:id="@+id/edit_profile_name"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
@@ -50,15 +50,28 @@
         android:hint="@string/signup_name_hint" />
 
     <EditText
-        android:id="@+id/edit_profile_email"
+        android:id="@+id/edit_profile_lastNname"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
         android:layout_marginHorizontal="16dp"
         android:paddingHorizontal="16dp"
         android:background="@drawable/bg_edit_text_fill"
-        android:inputType="textEmailAddress"
-        android:hint="@string/login_email_hint" />
+        android:inputType="text"
+        android:hint="@string/signup_last_name_hint" />
+
+    <TextView
+        android:id="@+id/edit_profile_email"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:gravity="center_vertical"
+        android:paddingVertical="8dp"
+        android:paddingHorizontal="16dp"
+        android:textStyle="italic"
+        android:textSize="18sp"
+        android:background="@drawable/bg_edit_text_fill" />
 
     <EditText
         android:id="@+id/edit_profile_bio"
@@ -91,17 +104,6 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/edit_profile_old_pass"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginHorizontal="16dp"
-        android:paddingHorizontal="16dp"
-        android:background="@drawable/bg_edit_text_fill"
-        android:inputType="textPassword"
-        android:hint="@string/profile_old_password_hint" />
-
-    <EditText
         android:id="@+id/edit_profile_new_pass"
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -112,13 +114,13 @@
         android:inputType="textPassword"
         android:hint="@string/profile_new_password_hint" />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/edit_profile_save"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginTop="8dp"
-        android:layout_marginHorizontal="16dp"
-        android:text="@string/profile_validate_password"
-        android:textColor="@color/blue_500"
-        android:onClick="onClickValidatePassword" />
+        android:layout_margin="16dp"
+        android:onClick="onClickSaveProfile"
+        android:background="@drawable/bg_button"
+        android:text="@string/profile_save_changes"
+        android:textColor="@color/white"/>
 </LinearLayout>

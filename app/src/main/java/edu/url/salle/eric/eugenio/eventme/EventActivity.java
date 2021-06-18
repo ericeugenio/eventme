@@ -1,6 +1,7 @@
 package edu.url.salle.eric.eugenio.eventme;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.ContentLoadingProgressBar;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -64,6 +67,14 @@ public class EventActivity extends AppCompatActivity {
     private void configureView() {
         int position = getIntent().getIntExtra(EXTRA_EVENT_POS, 0);
         mEvent = EventAdapter.getEvents().get(position);
+
+        // Show delete button only if event is from user and has not started
+        if (User.getUser().getId() == mEvent.getOrganiserId()) {
+            if (new Date().before(mEvent.getStartDate())) {
+                ImageButton delete = findViewById(R.id.event_delete);
+                delete.setVisibility(View.VISIBLE);
+            }
+        }
 
         configureHeader();
         configureDates();
@@ -176,24 +187,29 @@ public class EventActivity extends AppCompatActivity {
         }
 
         // Button
-        String token = User.getUser().getToken();
-        ApiAdapter.getInstance().getJoinedFutureEvents(token, User.getUser().getId()).enqueue(new Callback<List<Event>>() {
-            @Override
-            public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
-                if (response.isSuccessful()) {
-                    for (Event e : response.body()) {
-                        if (e.getId() == mEvent.getId()) {
-                            mJoinButton.setText(R.string.event_cancel_button);
+        if (mEvent.getStartDate().before(new Date())) {
+            mJoinButton.setVisibility(View.GONE);
+        }
+        else {
+            String token = User.getUser().getToken();
+            ApiAdapter.getInstance().getJoinedFutureEvents(token, User.getUser().getId()).enqueue(new Callback<List<Event>>() {
+                @Override
+                public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+                    if (response.isSuccessful()) {
+                        for (Event e : response.body()) {
+                            if (e.getId() == mEvent.getId()) {
+                                mJoinButton.setText(R.string.event_cancel_button);
+                            }
                         }
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<List<Event>> call, Throwable t) {
+                @Override
+                public void onFailure(Call<List<Event>> call, Throwable t) {
 
-            }
-        });
+                }
+            });
+        }
     }
 
     // ----------------------------------------------
@@ -226,7 +242,25 @@ public class EventActivity extends AppCompatActivity {
     }
 
     public void onClickContactOrganiser(View view) {
-        // TODO: Contact organiser
+        Intent intent = ChatActivity.newIntent(this, -1, mEvent.getOrganiserId());
+        startActivity(intent);
+    }
+
+    public void onClickDeleteEvents(View view) {
+        String token = User.getUser().getToken();
+        ApiAdapter.getInstance().removeEvent(token, mEvent.getId()).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 
     // ----------------------------------------------
@@ -240,6 +274,14 @@ public class EventActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Attendance> call, Response<Attendance> response) {
                 if (response.isSuccessful()) {
+                    // Increase attendance by one
+                    String capacity = mCapacity.getText().toString();
+                    int curParticipants = Integer.parseInt(capacity.substring(0, capacity.indexOf("/")));
+
+                    capacity = ++curParticipants + "/" + mEvent.getTotalParticipants();
+                    mCapacity.setText(capacity);
+
+                    // Update button
                     mJoinButton.setText(R.string.event_cancel_button);
                 }
             }
@@ -248,6 +290,7 @@ public class EventActivity extends AppCompatActivity {
             public void onFailure(Call<Attendance> call, Throwable t) {
 
             }
+
         });
     }
 
@@ -268,4 +311,5 @@ public class EventActivity extends AppCompatActivity {
             }
         });
     }
+
 }

@@ -21,9 +21,18 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
+
+import edu.url.salle.eric.eugenio.eventme.api.ApiAdapter;
+import edu.url.salle.eric.eugenio.eventme.model.Event;
+import edu.url.salle.eric.eugenio.eventme.model.User;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class NewEventActivity extends AppCompatActivity {
 
@@ -37,11 +46,9 @@ public class NewEventActivity extends AppCompatActivity {
     // Filter chips
     private Button mSelectedChip;
 
-    private static final String DATE_FORMAT = "yyMMddHHmm";
+    private static final String DATE_FORMAT = "EEE, d MMM yyyy 'at' h:mm a";
     private static final String DAY_FORMAT = "EEE, d MMM yyyy";
     private static final String TIME_FORMAT = "h:mm a";
-    private String startDay, startTime;
-    private String endDay, endTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,8 +104,8 @@ public class NewEventActivity extends AppCompatActivity {
     // ----------------------------------------------
 
     public void onCLickAddPhoto(View view) {
-        // TODO: add a photo from either gallery or camera
-        Toast.makeText(view.getContext(), "Add an image", Toast.LENGTH_SHORT).show();
+        // TODO: add a photo url
+        Toast.makeText(this, R.string.toast_to_be_implemented, Toast.LENGTH_SHORT).show();
     }
 
     // ----------------------------------------------
@@ -117,18 +124,34 @@ public class NewEventActivity extends AppCompatActivity {
         if (view.getId() == R.id.newEvent_startDay) {
             datePicker = new DatePickerDialog(this, R.style.datePicker_style,
                     this::onStartDateSet, year, month, dayOfMonth);
+
+            // Limit date
+            datePicker.getDatePicker().setMinDate(c.getTimeInMillis());
+            if (!mEventEndDay.getText().toString().isEmpty()) {
+                try {
+                    Date date = new SimpleDateFormat(DAY_FORMAT, Locale.ENGLISH).parse(mEventEndDay.getText().toString());
+                    datePicker.getDatePicker().setMaxDate(date.getTime());
+                } catch (ParseException ignored) {}
+            }
+
         }
         else {
             datePicker = new DatePickerDialog(this, R.style.datePicker_style,
                     this::onEndDateSet, year, month, dayOfMonth);
+
+            // Limit date
+            if (!mEventStartDay.getText().toString().isEmpty()) {
+                try {
+                    Date date = new SimpleDateFormat(DAY_FORMAT, Locale.ENGLISH).parse(mEventStartDay.getText().toString());
+                    datePicker.getDatePicker().setMinDate(date.getTime());
+                } catch (ParseException ignored) {}
+            }
         }
 
         datePicker.show();
     }
 
     private void onStartDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        startDay = year + "" + month + "" + dayOfMonth;
-
         Calendar c = Calendar.getInstance();
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month);
@@ -140,8 +163,6 @@ public class NewEventActivity extends AppCompatActivity {
     }
 
     private void onEndDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        endDay = year + "" + month + "" + dayOfMonth;
-
         Calendar c = Calendar.getInstance();
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month);
@@ -173,8 +194,6 @@ public class NewEventActivity extends AppCompatActivity {
     }
 
     private void onStartTimeSet(TimePicker view, int hourOfDay, int minute) {
-        startTime = hourOfDay + "" + minute;
-
         Calendar c = Calendar.getInstance();
         c.set(Calendar.HOUR_OF_DAY, hourOfDay);
         c.set(Calendar.MINUTE, minute);
@@ -185,8 +204,6 @@ public class NewEventActivity extends AppCompatActivity {
     }
 
     private void onEndTimeSet(TimePicker view, int hourOfDay, int minute) {
-        endTime = hourOfDay + "" + minute;
-
         Calendar c = Calendar.getInstance();
         c.set(Calendar.HOUR_OF_DAY, hourOfDay);
         c.set(Calendar.MINUTE, minute);
@@ -217,6 +234,51 @@ public class NewEventActivity extends AppCompatActivity {
     // ----------------------------------------------
 
     public void onClickCreateEvent(View view) {
-        // TODO: create event
+        String image = "noImage";
+        String name = mEventName.getText().toString();
+        String type = mSelectedChip.getText().toString();
+        String description = mEventDescription.getText().toString();
+        String location = mEventLocation.getText().toString();
+        String participants = mEventParticipants.getText().toString();
+        String startDay = mEventStartDay.getText().toString();
+        String startTime = mEventStartTime.getText().toString();
+        String endDay = mEventEndDay.getText().toString();
+        String endTime = mEventEndTime.getText().toString();
+
+        int maxParticipants;
+        Date startDate = null;
+        Date endDate = null;
+
+        if ( name.isEmpty() || description.isEmpty() || location.isEmpty() || type.isEmpty()
+            || participants.isEmpty() || startDay.isEmpty() || startTime.isEmpty()
+            || endDay.isEmpty() || endTime.isEmpty()) {
+
+            Toast.makeText(this, R.string.toast_form_empty, Toast.LENGTH_SHORT).show();
+        }
+        else {
+            maxParticipants = Integer.parseInt(participants);
+
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH);
+                startDate = sdf.parse(startDay + " at " + startTime);
+                endDate = sdf.parse(endDay + " at " + endTime);
+            } catch (ParseException ignored) {}
+
+            String token = User.getUser().getToken();
+            Event event = new Event(name, type, description, maxParticipants, location, image, startDate, endDate);
+            ApiAdapter.getInstance().insertEvent(token, event).enqueue(new Callback<Event>() {
+                @Override
+                public void onResponse(Call<Event> call, Response<Event> response) {
+                    if (response.isSuccessful()) {
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Event> call, Throwable t) {
+
+                }
+            });
+        }
     }
 }
